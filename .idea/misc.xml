@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Study/AndroidStudioWorkspace/project-template/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.167" />
+        <entry key="..\:/Study/AndroidStudioWorkspace/project-template/app/src/main/res/drawable/bg_home_tab.xml" value="0.167" />
+        <entry key="..\:/Study/AndroidStudioWorkspace/project-template/app/src/main/res/drawable/ic_launcher_background.xml" value="0.25" />
+        <entry key="..\:/Study/AndroidStudioWorkspace/project-template/app/src/main/res/drawable/selector_tab_home.xml" value="0.167" />
+        <entry key="..\:/Study/AndroidStudioWorkspace/project-template/app/src/main/res/drawable/selector_tab_mine.xml" value="0.167" />
+        <entry key="..\:/Study/AndroidStudioWorkspace/project-template/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Study/AndroidStudioWorkspace/project-template/app/src/main/res/layout/activity_shortcut.xml" value="0.17198581560283688" />
+        <entry key="..\:/Study/AndroidStudioWorkspace/project-template/app/src/main/res/layout/activity_splash.xml" value="0.25" />
+        <entry key="..\:/Study/AndroidStudioWorkspace/project-template/app/src/main/res/layout/fragment_home.xml" value="0.25" />
+        <entry key="..\:/Study/AndroidStudioWorkspace/project-template/app/src/main/res/layout/fragment_mine.xml" value="0.35260416666666666" />
+        <entry key="..\:/Study/AndroidStudioWorkspace/project-template/app/src/main/res/xml/shortcuts.xml" value="0.3536458333333333" />
+        <entry key="..\:/Study/AndroidStudioWorkspace/project-template/lib_common/src/main/res/drawable/bg_dialog_loading.xml" value="0.25" />
+        <entry key="..\:/Study/AndroidStudioWorkspace/project-template/lib_common/src/main/res/drawable/shape_90_0_10dp.xml" value="0.25" />
+        <entry key="..\:/Study/AndroidStudioWorkspace/project-template/lib_common/src/main/res/drawable/shape_black_80_5dp.xml" value="0.167" />
+        <entry key="..\:/Study/AndroidStudioWorkspace/project-template/lib_common/src/main/res/drawable/shape_soild_f_5dp.xml" value="0.25" />
+        <entry key="..\:/Study/AndroidStudioWorkspace/project-template/lib_common/src/main/res/drawable/shape_white_5dp.xml" value="0.25" />
+        <entry key="..\:/Study/AndroidStudioWorkspace/project-template/lib_common/src/main/res/drawable/shape_white_top_line.xml" value="0.167" />
+        <entry key="..\:/Study/AndroidStudioWorkspace/project-template/lib_common/src/main/res/layout/dialog_alert_msg.xml" value="0.3536458333333333" />
+        <entry key="..\:/Study/AndroidStudioWorkspace/project-template/lib_common/src/main/res/layout/dialog_loading.xml" value="0.35260416666666666" />
+        <entry key="..\:/Study/AndroidStudioWorkspace/project-template/lib_common/src/main/res/layout/layout_common_title.xml" value="0.35260416666666666" />
+        <entry key="..\:/Study/AndroidStudioWorkspace/project-template/lib_widget/src/main/res/drawable/selector_pickerview_btn.xml" value="0.25" />
+        <entry key="..\:/Study/AndroidStudioWorkspace/project-template/module_login/src/main/res/layout/activity_login.xml" value="0.3536458333333333" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

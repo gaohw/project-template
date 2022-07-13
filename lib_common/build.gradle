@@ -1,0 +1,59 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions { jvmTarget = '1.8' }
+
+    dataBinding { enabled = true }
+    viewBinding { enabled = true }
+//    buildFeatures {
+//        dataBinding = true
+//        viewBinding = true
+//    }
+}
+
+dependencies {
+    implementation rootProject.ext.deps.appcompat
+    implementation rootProject.ext.deps.material
+    implementation rootProject.ext.deps.core_ktx
+
+    api rootProject.ext.deps.activity_ktx
+    api rootProject.ext.deps.fragment_ktx
+    api rootProject.ext.deps.viewmodel_ktx
+
+    api rootProject.ext.deps.gson
+    api rootProject.ext.deps.okhttp
+    api rootProject.ext.deps.retrofit
+    implementation rootProject.ext.deps.okhttp_logging
+    implementation rootProject.ext.deps.retrofit_convert_gson
+    implementation rootProject.ext.deps.retrofit_convert_scalars
+
+    api rootProject.ext.deps.arouter
+    api rootProject.ext.deps.utilcodex
+
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+}

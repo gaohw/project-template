@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <shortcut
+        android:enabled="true"
+        android:icon="@mipmap/ic_launcher"
+        android:shortcutId="shortcut_s_1"
+        android:shortcutShortLabel="@string/shortcut_s_1"
+        tools:targetApi="n_mr1">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="com.project.template.shortcut.ShortcutActivity"
+            android:targetPackage="com.project.template" />
+    </shortcut>
+    <shortcut
+        android:enabled="true"
+        android:icon="@mipmap/ic_launcher"
+        android:shortcutId="shortcut_s_2"
+        android:shortcutShortLabel="@string/shortcut_s_2"
+        tools:targetApi="n_mr1">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="com.project.template.main.MainActivity"
+            android:targetPackage="com.project.template" />
+    </shortcut>
+</shortcuts>
