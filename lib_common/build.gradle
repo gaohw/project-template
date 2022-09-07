@@ -6,6 +6,7 @@ plugins {
 }
 
 group = 'com.github.gaohw'
+version = "1.0.0"
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
