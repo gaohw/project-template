@@ -1,6 +1,6 @@
 package com.ctsi.vip.lib.common.http
 
-import com.ctsi.vip.lib.common.utils.JsonUtil
+import com.ctsi.vip.lib.common.utils.JsonUtils
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -91,6 +91,6 @@ class ApiParam : Serializable {
     fun getParams(): Map<String, Any> = params
 
     fun getBody(): RequestBody {
-        return JsonUtil.toJson(params).toRequestBody("application/json; charset=utf-8".toMediaType())
+        return JsonUtils.toJson(params).toRequestBody("application/json; charset=utf-8".toMediaType())
     }
 }

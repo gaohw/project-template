@@ -18,7 +18,8 @@ import com.ctsi.vip.lib.common.R
  */
 class AlertMsgDialog private constructor(private val builder: Builder) : AlertDialog(builder.context, R.style.AlertMsgDialog) {
 
-    private var tvMsg: TextView? = null
+    private var tvTitle: TextView? = null
+    private var tvMessage: TextView? = null
 
     private var hDivider: View? = null
     private var vDivider: View? = null
@@ -31,13 +32,17 @@ class AlertMsgDialog private constructor(private val builder: Builder) : AlertDi
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dialog_alert_msg)
 
-        tvMsg = findViewById(R.id.tv_alert_msg)
+        tvTitle = findViewById(R.id.tv_alert_title)
+        tvMessage = findViewById(R.id.tv_alert_msg)
+
         hDivider = findViewById(R.id.h_divider)
         vDivider = findViewById(R.id.v_divider)
         btnPositive = findViewById(R.id.btn_positive)
         btnNegative = findViewById(R.id.btn_negative)
 
-        tvMsg?.text = builder.message
+        tvTitle?.text = builder.title
+        tvTitle?.visibility = if (builder.title.isNullOrEmpty()) View.GONE else View.VISIBLE
+        tvMessage?.text = builder.message
         vDivider?.visibility = View.VISIBLE
         setDialogButton(btnPositive, builder.textPositive, builder.callbackPositive)
         setDialogButton(btnNegative, builder.textNegative, builder.callbackNegative)
@@ -70,8 +75,14 @@ class AlertMsgDialog private constructor(private val builder: Builder) : AlertDi
         window?.setBackgroundDrawableResource(R.drawable.shape_white_5dp)
     }
 
+    override fun dismiss() {
+        super.dismiss()
+        mHandler.removeCallbacksAndMessages(null)
+    }
+
     class Builder(val context: Context) {
 
+        var title: String? = null
         var message: String? = null
         var autoDismiss: Boolean = false
         var autoDismissInterval: Long = 0
@@ -82,6 +93,11 @@ class AlertMsgDialog private constructor(private val builder: Builder) : AlertDi
         var textNegative: String? = null
         var colorNegative: Int = 0
         var callbackNegative: DialogInterface.OnClickListener? = null
+
+        fun setAlertTitle(title: String): Builder {
+            this.title = title
+            return this
+        }
 
         fun setAlertMessage(msg: String): Builder {
             this.message = msg

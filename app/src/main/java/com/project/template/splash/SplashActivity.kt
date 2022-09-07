@@ -10,7 +10,7 @@ import com.ctsi.vip.lib.common.base.BaseViewModel
 import com.ctsi.vip.module.login.UserInfoUtil
 import com.project.template.databinding.ActivitySplashBinding
 import com.project.template.main.MainActivity
-import com.project.template.shortcut.ShortcutActivity
+import com.project.template.test.shortcut.ShortcutActivity
 
 /**
  * Created by GaoHW at 2022-6-28.

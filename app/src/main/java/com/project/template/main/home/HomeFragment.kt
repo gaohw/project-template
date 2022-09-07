@@ -14,7 +14,7 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>() {
 
     override fun onFragmentCreate() {
         mBinding.vTitle.showBack(false).setTitleText("首页")
-            .setTitleLightMode(false)
+            .setTitleLightMode(false).fitSystemWindows(true)
             .setTitleBackground(R.color.color_main)
     }
 }

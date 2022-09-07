@@ -14,11 +14,11 @@ import com.blankj.utilcode.util.ColorUtils
 import com.ctsi.vip.lib.common.R
 
 /**
- * Class : CommonEmptyView
+ * Class : CommonEmpty
  * Create by GaoHW at 2022-7-8 10:21.
  * Description:
  */
-class CommonEmptyView : LinearLayout {
+class CommonEmpty : LinearLayout {
 
     private var ivEmpty: ImageView
     private var tvEmpty: TextView
@@ -44,12 +44,12 @@ class CommonEmptyView : LinearLayout {
         addView(tvEmpty)
     }
 
-    fun setEmptyIcon(@DrawableRes resource: Int): CommonEmptyView {
+    fun setEmptyIcon(@DrawableRes resource: Int): CommonEmpty {
         ivEmpty.setImageResource(resource)
         return this
     }
 
-    fun setEmptyText(text: String?): CommonEmptyView {
+    fun setEmptyText(text: String?): CommonEmpty {
         tvEmpty.text = text
         return this
     }

@@ -2,7 +2,7 @@ package com.ctsi.vip.module.login
 
 import com.blankj.utilcode.util.SPUtils
 import com.ctsi.vip.lib.common.http.HttpConstants
-import com.ctsi.vip.lib.common.utils.JsonUtil
+import com.ctsi.vip.lib.common.utils.JsonUtils
 import com.ctsi.vip.module.login.bean.UserBean
 
 /**
@@ -28,7 +28,7 @@ object UserInfoUtil {
         if (user != null) {
             isLogin = true
             SPUtils.getInstance().put(KEY_IS_LOGIN, true)
-            SPUtils.getInstance().put(KEY_USER, JsonUtil.toJson(user))
+            SPUtils.getInstance().put(KEY_USER, JsonUtils.toJson(user))
             SPUtils.getInstance().put(HttpConstants.KEY_ACCESS_TOKEN, user.token)
         } else {
             SPUtils.getInstance().put(KEY_USER, "")

@@ -29,21 +29,23 @@ open class BaseViewModel : ViewModel(), LifecycleObserver {
         mLoadingStatus.postValue(Status.Dismiss)
     }
 
-    fun launch(block: suspend CoroutineScope.() -> Unit) = viewModelScope.launch {
-        try {
-            withTimeout(5000) { block() }
-        } catch (e: Exception) {
-            e.printStackTrace()
-            cancel("${e.message}}", e)
-
+    fun launch(errorBlock: ((Throwable) -> Unit)? = null, runBlock: suspend CoroutineScope.() -> Unit) =
+        viewModelScope.launch {
+            try {
+                withTimeout(5000) { runBlock() }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                cancel("${e.message}}", e)
+            }
+        }.invokeOnCompletion {
             //针对具体exception做相应处理，未包含错误需在viewmodel中调用invokeOnCompletion自行处理
-            when (e) {
+            when (it) {
                 is BaseRepository.TokenInvalidException -> {
                     //go login
                     ToastUtils.showShort("登录已超时，请重新登录")
                     Routers.login(clear = true)
                 }
+                else -> it?.let { errorBlock?.invoke(it) }
             }
         }
-    }
 }

@@ -9,7 +9,7 @@
         tools:targetApi="n_mr1">
         <intent
             android:action="android.intent.action.VIEW"
-            android:targetClass="com.project.template.shortcut.ShortcutActivity"
+            android:targetClass="com.project.template.test.shortcut.ShortcutActivity"
             android:targetPackage="com.project.template" />
     </shortcut>
     <shortcut

@@ -11,4 +11,7 @@
     <color name="pickerview_bgColor_overlay">#60000000</color>
     <color name="pickerview_bgColor_default">#FFFFFFFF</color>
 
+    <color name="bottom_input_enable">#057dff</color>
+    <color name="bottom_input_disable">@color/color_de</color>
+
 </resources>

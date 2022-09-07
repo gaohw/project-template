@@ -11,6 +11,8 @@ object HttpConstants {
         const val Success = "200"
         const val Success0 = "0"
 
+        const val NetError = "-2"
+        const val UnknownError = "-100"
         const val JsonParseError = "-1"
         const val TokenInvalidError = "401"
     }

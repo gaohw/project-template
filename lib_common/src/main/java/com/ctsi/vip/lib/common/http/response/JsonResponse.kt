@@ -13,7 +13,7 @@ class JsonResponse : JSONObject {
 
     constructor(json: String) : super(json)
 
-    fun getCode() = optString("code", "")
+    fun getCode(): String = optString("code", "")
 
-    fun getMsg() = optString("msg", "")
+    fun getMsg(): String? = optString("msg", "")
 }

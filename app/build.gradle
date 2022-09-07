@@ -37,6 +37,11 @@ android {
             arg("AROUTER_MODULE_NAME", project.getName())
         }
     }
+    sourceSets {
+        main {
+            res.srcDirs('src/main/res', 'src/main/res-test')
+        }
+    }
     viewBinding { enabled = true }
 }
 
@@ -48,7 +53,6 @@ dependencies {
 
     implementation(project(":lib_common"))
     implementation(project(":lib_widget"))
-    implementation(project(":module_login"))
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

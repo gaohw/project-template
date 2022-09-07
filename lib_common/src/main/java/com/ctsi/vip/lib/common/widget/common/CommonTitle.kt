@@ -12,11 +12,11 @@ import com.blankj.utilcode.util.BarUtils
 import com.ctsi.vip.lib.common.R
 
 /**
- * Class : CommonTitleView
+ * Class : CommonTitle
  * Create by GaoHW at 2022-7-13 9:58.
  * Description:
  */
-class CommonTitleView : FrameLayout {
+class CommonTitle : FrameLayout {
 
     private val btnBack: ImageButton
     private val tvTitle: TextView
@@ -25,7 +25,6 @@ class CommonTitleView : FrameLayout {
     constructor(context: Context) : this(context, null)
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
-        setPadding(0, BarUtils.getStatusBarHeight(), 0, 0)
         layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
 
         LayoutInflater.from(context).inflate(R.layout.layout_common_title, this)
@@ -34,12 +33,21 @@ class CommonTitleView : FrameLayout {
         tvRight = findViewById(R.id.c_tv_right)
     }
 
-    fun showBack(show: Boolean): CommonTitleView {
-        btnBack.visibility = if (show) View.VISIBLE else View.GONE
+    fun showBack(show: Boolean = true): CommonTitle {
+        btnBack.visibility = if (show) View.VISIBLE else View.INVISIBLE
         return this
     }
 
-    fun setTitleLightMode(isLight: Boolean): CommonTitleView {
+    fun fitSystemWindows(fit: Boolean = true): CommonTitle {
+        if (fit) {
+            setPadding(0, BarUtils.getStatusBarHeight(), 0, 0)
+        } else {
+            setPadding(0, 0, 0, 0)
+        }
+        return this
+    }
+
+    fun setTitleLightMode(isLight: Boolean): CommonTitle {
         if (isLight) {
             btnBack.setImageResource(R.drawable.c_ic_back_black)
             tvTitle.setTextColor(ContextCompat.getColor(context, R.color.color_3))
@@ -52,12 +60,12 @@ class CommonTitleView : FrameLayout {
         return this
     }
 
-    fun setTitleText(title: String): CommonTitleView {
+    fun setTitleText(title: String): CommonTitle {
         tvTitle.text = title
         return this
     }
 
-    fun setTitleBackground(resource: Int): CommonTitleView {
+    fun setTitleBackground(resource: Int): CommonTitle {
         setBackgroundResource(resource)
         return this
     }

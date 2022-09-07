@@ -10,7 +10,7 @@ import java.util.*
  *
  * Desc:
  */
-object JsonUtil {
+object JsonUtils {
 
     private val gson: Gson = Gson()
 

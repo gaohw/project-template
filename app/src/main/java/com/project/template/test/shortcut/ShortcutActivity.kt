@@ -1,15 +1,11 @@
-package com.project.template.shortcut
+package com.project.template.test.shortcut
 
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.content.pm.ShortcutInfo
 import android.content.pm.ShortcutManager
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.PersistableBundle
-import androidx.annotation.RequiresApi
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
@@ -31,7 +27,7 @@ class ShortcutActivity : BaseActivity<BaseViewModel, ActivityShortcutBinding>() 
             val shortcut = ShortcutInfoCompat.Builder(this, "shortcut_d_1")
                 .setShortLabel("动态快捷方式")
                 .setIntent(
-                    Intent("com.project.template.shortcut")
+                    Intent("com.project.template.test.shortcut")
                         .putExtra("next", "shortcut")
                 )
                 .setIcon(IconCompat.createWithResource(this, R.mipmap.ic_launcher_round))
@@ -55,7 +51,7 @@ class ShortcutActivity : BaseActivity<BaseViewModel, ActivityShortcutBinding>() 
                     val compat = ShortcutInfoCompat.Builder(context, "shortcut_p_1")
                         .setShortLabel("固定快捷方式")
                         .setIntent(
-                            Intent("com.project.template.shortcut")
+                            Intent("com.project.template.test.shortcut")
                                 .putExtra("next", "shortcut")
                         )
                         .setIcon(IconCompat.createWithResource(this, R.mipmap.ic_launcher))
