@@ -4,7 +4,6 @@ import com.ctsi.vip.lib.common.http.ApiService
 import com.ctsi.vip.lib.common.http.response.BeanResponse
 import com.ctsi.vip.lib.common.http.HttpConstants
 import com.ctsi.vip.lib.common.http.RetrofitManager
-import com.ctsi.vip.lib.common.http.response.JsonResponse
 import com.ctsi.vip.lib.common.utils.JsonUtils
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
@@ -23,86 +22,51 @@ open class BaseRepository {
 
     fun <T> createService(clazz: Class<T>): T = RetrofitManager.create(clazz)
 
-    suspend inline fun <reified T : Any> request(crossinline call: suspend () -> Call<ResponseBody>): BeanResponse<T> {
-        return withContext(Dispatchers.IO) {
-            try {
-                val response = call.invoke().execute()
-                val result: BeanResponse<T> =
-                    if (response.isSuccessful && response.body() != null) {
-                        val body = response.body()!!.string()
-                        try {
-                            JsonUtils.fromJson(body, object : TypeToken<BeanResponse<T>>() {}.type)
-                        } catch (e: Exception) {
-                            if (T::class.java == java.lang.String::class.java) {
-                                BeanResponse<T>().apply {
-                                    code = HttpConstants.Status.Success
-                                    data = body as T
-                                }
-                            } else {
-                                try {
-                                    JsonUtils.fromJson(body, object : TypeToken<T>() {}.type)
-                                } catch (e: Exception) {
-                                    BeanResponse<T>().apply {
-                                        code = HttpConstants.Status.JsonParseError
-                                        msg = e.message
-                                    }
-                                }
-                            }
-                        }
-                    } else {
-                        BeanResponse<T>().apply {
-                            code = "${response.code()}"
-                            msg = response.message()
-                        }
-                    }
-                result
-            } catch (e: Exception) {
-                BeanResponse<T>().apply {
-                    code = HttpConstants.Status.NetError
-                    msg = e.message
-                }
+    suspend fun <T : Any> request(call: suspend () -> Call<ResponseBody>):
+            BeanResponse<T> {
+        return try {
+            val response = requestOrigin(call)
+            JsonUtils.fromJson(response, object : TypeToken<BeanResponse<T>>() {}.type)
+        } catch (e: Exception) {
+            BeanResponse<T>().apply {
+                code = HttpConstants.Status.UnknownError
+                msg = e.message
             }
         }.apply {
-            //这儿可以对返回结果errorCode做一些特殊处理，比如token失效等，可以通过抛出异常的方式实现
             when (code) {
                 HttpConstants.Status.TokenInvalidError -> throw TokenInvalidException()
             }
         }
     }
 
-    suspend fun requestJson(call: suspend () -> Call<ResponseBody>): JsonResponse {
+    suspend fun <T : Any> requestCus(call: suspend () -> Call<ResponseBody>): T? {
+        return try {
+            val response = requestOrigin(call)
+            JsonUtils.fromJson(response, object : TypeToken<BeanResponse<T>>() {}.type)
+        } catch (e: Exception) {
+            null
+        }
+    }
+
+    suspend fun requestOrigin(call: suspend () -> Call<ResponseBody>): String {
         return withContext(Dispatchers.IO) {
             try {
-                val response = call.invoke().execute()
-                val result: JsonResponse =
-                    if (response.isSuccessful && response.body() != null) {
-                        val body = response.body()!!.string()
-                        try {
-                            JsonResponse(body)
-                        } catch (e: Exception) {
-                            JsonResponse().apply {
-                                put("code", HttpConstants.Status.JsonParseError)
-                                put("msg", e.message)
-                            }
-                        }
+                val request = call.invoke().execute()
+                val response: String =
+                    if (request.isSuccessful && request.body() != null) {
+                        request.body()!!.string()
                     } else {
-                        JsonResponse().apply {
-                            put("code", response.code())
-                            put("msg", response.message())
-                        }
+                        generateErrorJson("${request.code()}", request.errorBody()?.string())
                     }
-                result
+                response
             } catch (e: Exception) {
-                JsonResponse().apply {
-                    put("code", HttpConstants.Status.NetError)
-                    put("msg", e.message)
-                }
-            }
-        }.apply {
-            when (getCode()) {
-                HttpConstants.Status.TokenInvalidError -> throw TokenInvalidException()
+                generateErrorJson(HttpConstants.Status.NetError, e.message)
             }
         }
+    }
+
+    private fun generateErrorJson(code: String, errMsg: String?): String {
+        return "{\"code\":\"${code}\", \"msg\" : \"${errMsg}\"}"
     }
 
     class TokenInvalidException(msg: String = "Token Invalid") : Exception(msg)
