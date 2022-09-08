@@ -50,10 +50,10 @@ dependencies {
     implementation rootProject.ext.deps.appcompat
     implementation rootProject.ext.deps.material
     kapt rootProject.ext.deps.arouter_compiler
+    implementation implementation(project(':widget',))
 
-    implementation(project(":lib_widget"))
-    implementation(project(":lib_common"))
-//    implementation 'com.github.gaohw:project-template:-SNAPSHOT'
+    //    implementation(project(":lib_common"))
+    implementation "com.github.gaohw.template:lib_common:1.0.0"
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

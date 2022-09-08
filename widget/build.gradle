@@ -5,8 +5,7 @@ plugins {
     id 'com.github.dcendents.android-maven'
 }
 
-group = 'com.github.gaohw'
-version = "1.0.0"
+group = 'com.ctsi.vip'
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
@@ -38,8 +37,8 @@ dependencies {
     implementation rootProject.ext.deps.appcompat
     implementation rootProject.ext.deps.material
     implementation rootProject.ext.deps.core_ktx
+    implementation implementation(project(':common',))
 
-    implementation(project(":lib_common"))
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

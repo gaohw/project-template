@@ -1,13 +1,11 @@
 package com.project.template.splash
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
 import com.ctsi.vip.lib.common.Routers
 import com.ctsi.vip.lib.common.base.BaseActivity
 import com.ctsi.vip.lib.common.base.BaseViewModel
-import com.ctsi.vip.module.login.UserInfoUtil
 import com.project.template.databinding.ActivitySplashBinding
 import com.project.template.main.MainActivity
 import com.project.template.test.shortcut.ShortcutActivity
@@ -50,11 +48,12 @@ class SplashActivity : BaseActivity<BaseViewModel, ActivitySplashBinding>() {
         if (isFinishing || isDestroyed) {
             return
         }
-        if (UserInfoUtil.isLogin()) {
-            startActivity(Intent(this, clazz).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
-        } else {
-            Routers.navigation(Routers.PATH_LOGIN)
-        }
+//        if (UserInfoUtil.isLogin()) {
+//            startActivity(Intent(this, clazz).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
+//        } else {
+//            Routers.navigation(Routers.PATH_LOGIN)
+//        }
+        Routers.navigation(Routers.PATH_LOGIN)
         finish()
     }
 
