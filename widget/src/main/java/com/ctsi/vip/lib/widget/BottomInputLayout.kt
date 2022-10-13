@@ -9,8 +9,6 @@ import android.widget.TextView
 import androidx.core.widget.doAfterTextChanged
 import com.blankj.utilcode.util.KeyboardUtils
 import com.blankj.utilcode.util.ToastUtils
-import com.ctsi.vip.lib.widget.common.EmojiInputFilter
-import com.ctsi.vip.lib.widget.common.RoundOutlineProvider
 
 /**
  * Class : BottomInputView

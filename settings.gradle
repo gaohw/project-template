@@ -1,4 +1,4 @@
 rootProject.name = "project-template"
 
 include ':app'
-include ':common', ':widget'
+include ':framework', ':widget'

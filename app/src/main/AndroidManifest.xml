@@ -14,7 +14,7 @@
         android:theme="@style/Theme.AppTheme">
 
         <activity
-            android:name=".splash.SplashActivity"
+            android:name="com.project.template.module.splash.SplashActivity"
             android:exported="true"
             android:theme="@style/SplashTheme">
             <intent-filter>
@@ -23,7 +23,7 @@
             </intent-filter>
 
             <!--            <intent-filter>-->
-            <!--                <action android:name="com.project.template.test.shortcut" />-->
+            <!--                <action android:name="com.project.template.module.test.shortcut" />-->
             <!--                <category android:name="android.intent.category.DEFAULT" />-->
             <!--            </intent-filter>-->
 
@@ -33,15 +33,19 @@
         </activity>
 
         <activity
-            android:name=".main.MainActivity"
+            android:name="com.project.template.module.main.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".test.shortcut.ShortcutActivity"
+            android:name="com.project.template.module.test.shortcut.ShortcutActivity"
             android:exported="false" />
         <activity
-            android:name=".test.TestActivity"
+            android:name="com.project.template.module.test.TestActivity"
             android:exported="false"
             android:windowSoftInputMode="stateHidden|adjustResize" />
+
+        <meta-data
+            android:name="com.project.template.config.AppModuleConfig"
+            android:value="ConfigModule" />
 
     </application>
 
