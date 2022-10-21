@@ -1,4 +1,4 @@
-package com.ctsi.vip.lib.framework.widget.dialog
+package com.ctsi.widget.dialog
 
 import android.content.Context
 import android.content.DialogInterface
@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AlertDialog
+import com.blankj.utilcode.util.ScreenUtils
 import com.ctsi.vip.lib.common.R
 
 /**
@@ -16,7 +17,7 @@ import com.ctsi.vip.lib.common.R
  *
  * Desc: 提示信息dialog
  */
-class AlertMsgDialog private constructor(private val builder: Builder) : AlertDialog(builder.context, R.style.AlertMsgDialog) {
+class AlertMsgDialog private constructor(private val builder: Builder) : AlertDialog(builder.context) {
 
     private var tvTitle: TextView? = null
     private var tvMessage: TextView? = null
@@ -31,6 +32,7 @@ class AlertMsgDialog private constructor(private val builder: Builder) : AlertDi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dialog_alert_msg)
+        setCancelable(builder.cancelable)
 
         tvTitle = findViewById(R.id.tv_alert_title)
         tvMessage = findViewById(R.id.tv_alert_msg)
@@ -46,7 +48,6 @@ class AlertMsgDialog private constructor(private val builder: Builder) : AlertDi
         vDivider?.visibility = View.VISIBLE
         setDialogButton(btnPositive, builder.textPositive, builder.callbackPositive)
         setDialogButton(btnNegative, builder.textNegative, builder.callbackNegative)
-        hDivider?.visibility = if (vDivider?.visibility == View.VISIBLE) View.VISIBLE else View.GONE
 
         if (builder.autoDismiss) {
             mHandler.postDelayed({ dismiss() }, builder.autoDismissInterval)
@@ -67,12 +68,16 @@ class AlertMsgDialog private constructor(private val builder: Builder) : AlertDi
                 }
             }
             button?.visibility = View.VISIBLE
+            hDivider?.visibility = View.VISIBLE
         }
     }
 
     override fun onStart() {
         super.onStart()
         window?.setBackgroundDrawableResource(R.drawable.shape_white_5dp)
+        window?.attributes?.apply {
+            width = (ScreenUtils.getAppScreenWidth() * 0.8).toInt()
+        }
     }
 
     override fun dismiss() {
@@ -84,6 +89,7 @@ class AlertMsgDialog private constructor(private val builder: Builder) : AlertDi
 
         var title: String? = null
         var message: String? = null
+        var cancelable: Boolean = true
         var autoDismiss: Boolean = false
         var autoDismissInterval: Long = 0
 
@@ -110,6 +116,11 @@ class AlertMsgDialog private constructor(private val builder: Builder) : AlertDi
             return this
         }
 
+        fun setCancelable(cancelable: Boolean): Builder {
+            this.cancelable = cancelable
+            return this
+        }
+
         fun setPositiveColor(@ColorInt color: Int): Builder {
             this.colorPositive = color
             return this
@@ -125,7 +136,6 @@ class AlertMsgDialog private constructor(private val builder: Builder) : AlertDi
             this.colorNegative = color
             return this
         }
-
 
         fun setNegativeButton(text: String, callback: DialogInterface.OnClickListener? = null): Builder {
             this.textNegative = text

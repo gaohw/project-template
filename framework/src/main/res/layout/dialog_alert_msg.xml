@@ -8,9 +8,11 @@
 
     <TextView
         android:id="@+id/tv_alert_title"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:gravity="center"
+        android:paddingHorizontal="15dp"
+        android:paddingTop="15dp"
         android:textColor="@color/color_3"
         android:textSize="20sp"
         android:textStyle="bold"
