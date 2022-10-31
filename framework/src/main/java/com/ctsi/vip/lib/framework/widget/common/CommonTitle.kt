@@ -30,7 +30,7 @@ class CommonTitle : FrameLayout {
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
 
-        LayoutInflater.from(context).inflate(R.layout.layout_common_title, this)
+        LayoutInflater.from(context).inflate(R.layout.c_layout_common_title, this)
         btnBack = findViewById(R.id.c_btn_back)
         tvTitle = findViewById(R.id.c_tv_title)
         tvRight = findViewById(R.id.c_tv_right)
@@ -57,11 +57,11 @@ class CommonTitle : FrameLayout {
 
     fun setTitleLightMode(isLight: Boolean): CommonTitle {
         if (isLight) {
-            btnBack.setImageResource(R.drawable.c_ic_back_black)
+            btnBack.setImageResource(R.drawable.c_ic_nav_back_black)
             tvTitle.setTextColor(ContextCompat.getColor(context, R.color.color_3))
             tvRight.setTextColor(ContextCompat.getColor(context, R.color.color_3))
         } else {
-            btnBack.setImageResource(R.drawable.c_ic_back_white)
+            btnBack.setImageResource(R.drawable.c_ic_nav_back_white)
             tvTitle.setTextColor(ContextCompat.getColor(context, R.color.color_f))
             tvRight.setTextColor(ContextCompat.getColor(context, R.color.color_f))
         }
@@ -70,6 +70,11 @@ class CommonTitle : FrameLayout {
 
     fun setTitleText(title: String): CommonTitle {
         tvTitle.text = title
+        return this
+    }
+
+    fun setTitleTextSize(size: Float): CommonTitle {
+        tvTitle.textSize = size
         return this
     }
 

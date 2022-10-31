@@ -31,7 +31,7 @@ class AlertMsgDialog private constructor(private val builder: Builder) : AlertDi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.dialog_alert_msg)
+        setContentView(R.layout.c_dialog_alert_msg)
         setCancelable(builder.cancelable)
 
         tvTitle = findViewById(R.id.tv_alert_title)
@@ -74,7 +74,7 @@ class AlertMsgDialog private constructor(private val builder: Builder) : AlertDi
 
     override fun onStart() {
         super.onStart()
-        window?.setBackgroundDrawableResource(R.drawable.shape_white_5dp)
+        window?.setBackgroundDrawableResource(R.drawable.c_shape_white_5dp)
         window?.attributes?.apply {
             width = (ScreenUtils.getAppScreenWidth() * 0.8).toInt()
         }

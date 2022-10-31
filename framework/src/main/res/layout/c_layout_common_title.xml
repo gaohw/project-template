@@ -13,7 +13,7 @@
         android:layout_centerVertical="true"
         android:background="@null"
         android:padding="10dp"
-        android:src="@drawable/c_ic_back_black" />
+        android:src="@drawable/c_ic_nav_back_black" />
 
     <TextView
         android:id="@+id/c_tv_title"
@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:textColor="@color/color_3"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         tools:text="标题" />
 
@@ -45,10 +45,9 @@
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:background="@null"
-        android:padding="5dp"
         android:scaleType="center"
         android:visibility="gone"
-        tools:src="@android:drawable/ic_secure"
+        tools:src="@drawable/c_ic_nav_close_black"
         tools:visibility="visible" />
 
     <View

@@ -28,7 +28,7 @@ class LoadingDialog private constructor(builder: Builder) : AlertDialog(builder.
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.dialog_loading)
+        setContentView(R.layout.c_dialog_loading)
 
         tvMsg = findViewById(R.id.tv_loading)
         pbLoading = findViewById(R.id.pb_loading)
