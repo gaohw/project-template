@@ -14,7 +14,7 @@ import com.ctsi.vip.lib.common.R
  * Desc: 加载弹窗 Loading Dialog
  */
 sealed class Status {
-    data class Show(val msg: String? = null) : Status()
+    data class Show(val msg: String? = "加载中...") : Status()
     object Dismiss : Status()
 }
 
