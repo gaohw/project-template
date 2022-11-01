@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageButton
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
@@ -20,6 +21,7 @@ import com.ctsi.vip.lib.common.R
  */
 class CommonTitle : FrameLayout {
 
+    private val layoutTitle: RelativeLayout
     private val btnBack: ImageButton
     private val tvTitle: TextView
     private val tvRight: TextView
@@ -31,6 +33,7 @@ class CommonTitle : FrameLayout {
         layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
 
         LayoutInflater.from(context).inflate(R.layout.c_layout_common_title, this)
+        layoutTitle = findViewById(R.id.c_layout_title)
         btnBack = findViewById(R.id.c_btn_back)
         tvTitle = findViewById(R.id.c_tv_title)
         tvRight = findViewById(R.id.c_tv_right)
@@ -41,8 +44,23 @@ class CommonTitle : FrameLayout {
         }
     }
 
-    fun showBack(show: Boolean = true): CommonTitle {
-        btnBack.visibility = if (show) View.VISIBLE else View.INVISIBLE
+    fun showTitle(show: Boolean): CommonTitle {
+        layoutTitle.visibility = if (show) View.VISIBLE else View.GONE
+        return this
+    }
+
+    fun showBack(show: Boolean): CommonTitle {
+        btnBack.visibility = if (show) View.VISIBLE else View.GONE
+        return this
+    }
+
+    fun showRightText(show: Boolean): CommonTitle {
+        tvRight.visibility = if (show) View.VISIBLE else View.GONE
+        return this
+    }
+
+    fun showRightImage(show: Boolean): CommonTitle {
+        btnRight.visibility = if (show) View.VISIBLE else View.GONE
         return this
     }
 
@@ -105,17 +123,5 @@ class CommonTitle : FrameLayout {
         btnRight.visibility = View.VISIBLE
         btnRight.setOnClickListener { block?.invoke() }
         return this
-    }
-
-    fun goneBack() {
-        btnBack.visibility = View.GONE
-    }
-
-    fun goneRightText() {
-        tvRight.visibility = View.GONE
-    }
-
-    fun goneRightImage() {
-        btnRight.visibility = View.GONE
     }
 }

@@ -19,7 +19,7 @@ class TestActivity : BaseActivity<BaseViewModel, ActivityTestBinding>() {
     override fun onActivityCreate(savedInstanceState: Bundle?) {
         BarUtils.setStatusBarColor(this, ColorUtils.getColor(R.color.color_main))
 
-        mBinding.layoutTitle.setTitleText("Test").showBack()
+        mBinding.layoutTitle.setTitleText("Test").showBack(true)
             .setTitleBackground(R.color.color_main).setTitleLightMode(false)
         mBinding.layoutInput.setInputSendListener { input -> ToastUtils.showShort(input) }
     }
