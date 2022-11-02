@@ -9,7 +9,7 @@ import com.ctsi.vip.lib.framework.base.delegate.AppDelegate
  *
  * Desc:
  */
-open class BaseApplication : Application() {
+abstract class BaseApplication : Application() {
 
     private var appDelegate: AppDelegate? = null
 
@@ -17,6 +17,7 @@ open class BaseApplication : Application() {
         super.attachBaseContext(base)
         if (appDelegate == null) {
             appDelegate = AppDelegate(base)
+                .setDebugMode(isDebugMode())
         }
         appDelegate?.attachBaseContext(base)
     }
@@ -30,4 +31,6 @@ open class BaseApplication : Application() {
         super.onTerminate()
         appDelegate?.onTerminate(this)
     }
+
+    abstract fun isDebugMode(): Boolean
 }

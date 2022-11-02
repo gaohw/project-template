@@ -18,6 +18,7 @@ import com.ctsi.vip.lib.framework.utils.ManifestParser
  */
 class AppDelegate constructor(context: Context) : IAppLifecycle {
 
+    private var isDebug: Boolean = false
     private var mApplication: Application? = null
     private val mDefaultActivityLifecycle by lazy { DefaultActivityLifecycle(mFragmentLifecycles) }
 
@@ -34,6 +35,11 @@ class AppDelegate constructor(context: Context) : IAppLifecycle {
         }
     }
 
+    fun setDebugMode(debug: Boolean): AppDelegate {
+        this.isDebug = debug
+        return this
+    }
+
     override fun attachBaseContext(context: Context?) {
         mAppLifecycles.forEach { it.attachBaseContext(context) }
     }
@@ -46,7 +52,9 @@ class AppDelegate constructor(context: Context) : IAppLifecycle {
         mActivityLifecycles.forEach { mApplication?.registerActivityLifecycleCallbacks(it) }
 
         mAppLifecycles.forEach { it.onCreate(application) }
-        AppContext.init(application, globalConfigModule)
+
+        //初始化
+        AppContext.debug(isDebug).init(application, globalConfigModule)
     }
 
     override fun onTerminate(application: Application) {

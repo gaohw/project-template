@@ -11,9 +11,10 @@ import com.ctsi.vip.lib.framework.base.BaseViewModel
 class MainViewModel : BaseViewModel() {
 
     fun getUnreadMessage() {
-        launch(errorBlock = {
-            LogUtils.eTag("OkHttp", "========> ${it.message}")
-        }) {
+        launch(
+            onError = {
+                LogUtils.eTag("OkHttp", "========> ${it.message}")
+            }) {
             val num = MainRepository.getAllUnreadMessage()
             LogUtils.eTag("OkHttp", "========> $num")
         }

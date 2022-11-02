@@ -18,7 +18,13 @@ import java.lang.ref.WeakReference
  */
 object AppContext {
 
+    private var debug: Boolean = false
     private var mAppContext: WeakReference<Context>? = null
+
+    fun debug(debug: Boolean): AppContext {
+        this.debug = debug
+        return this
+    }
 
     fun init(application: Application, globalConfigModule: GlobalConfigModule): AppContext {
         if (mAppContext != null) {
@@ -26,13 +32,18 @@ object AppContext {
             return this
         }
         mAppContext = WeakReference(application)
+
+        //工具类
         Utils.init(application)
 
-        if (BuildConfig.DEBUG) {
+        //ARouter
+        if (debug) {
             ARouter.openLog()
             ARouter.openDebug()
         }
         ARouter.init(application)
+
+        //网络相关
         NetworkStateHelper.registerReceiver(application)
         RetrofitManager.init(
             application,

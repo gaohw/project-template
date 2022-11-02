@@ -2,6 +2,8 @@ plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
 
+    id 'kotlin-kapt'
+//    id 'com.google.dagger.hilt.android'
     id 'com.github.dcendents.android-maven'
 }
 
@@ -58,7 +60,13 @@ dependencies {
     api rootProject.ext.deps.arouter
     api rootProject.ext.deps.utilcodex
 
+//    api "com.google.dagger:hilt-android:$hilt_version"
+//    kapt "com.google.dagger:hilt-compiler:$hilt_version"
+
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+}
+kapt {
+    correctErrorTypes true
 }

@@ -12,4 +12,6 @@ class AppApplication : BaseApplication() {
     override fun onCreate() {
         super.onCreate()
     }
+
+    override fun isDebugMode(): Boolean = BuildConfig.DEBUG
 }

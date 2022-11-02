@@ -8,7 +8,7 @@ import com.ctsi.vip.lib.framework.base.lifecycles.IActivityLifecycle
  * Create by GaoHW at 2022-10-13 10:37.
  * Description:
  */
-class ActivityDelegate(activity: IActivity) : IActivityLifecycle {
+class ActivityDelegate(val activity: IActivity) : IActivityLifecycle {
 
     companion object {
         @JvmStatic
