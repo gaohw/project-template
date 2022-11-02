@@ -4,7 +4,6 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.blankj.utilcode.util.ToastUtils
-import com.ctsi.vip.lib.framework.router.RouterHub
 import com.ctsi.vip.lib.framework.utils.SingleLiveEvent
 import com.ctsi.vip.lib.framework.widget.dialog.Status
 import kotlinx.coroutines.*
@@ -51,8 +50,6 @@ open class BaseViewModel : ViewModel(), LifecycleObserver {
     }
 
     protected open fun goLogin() {
-        //go login
         ToastUtils.showShort("登录已超时，请重新登录")
-        RouterHub.login(clear = true)
     }
 }
