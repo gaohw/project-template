@@ -1,4 +1,4 @@
-package com.ctsi.widget.dialog
+package com.ctsi.vip.lib.framework.widget.dialog
 
 import android.content.Context
 import android.content.DialogInterface
@@ -49,6 +49,7 @@ class AlertMsgDialog private constructor(private val builder: Builder) : AlertDi
         setDialogButton(btnPositive, builder.textPositive, builder.callbackPositive)
         setDialogButton(btnNegative, builder.textNegative, builder.callbackNegative)
 
+        builder.callbackDismiss?.let { setOnDismissListener(it) }
         if (builder.autoDismiss) {
             mHandler.postDelayed({ dismiss() }, builder.autoDismissInterval)
         }
@@ -100,6 +101,8 @@ class AlertMsgDialog private constructor(private val builder: Builder) : AlertDi
         var colorNegative: Int = 0
         var callbackNegative: DialogInterface.OnClickListener? = null
 
+        var callbackDismiss: DialogInterface.OnDismissListener? = null
+
         fun setAlertTitle(title: String): Builder {
             this.title = title
             return this
@@ -140,6 +143,11 @@ class AlertMsgDialog private constructor(private val builder: Builder) : AlertDi
         fun setNegativeButton(text: String, callback: DialogInterface.OnClickListener? = null): Builder {
             this.textNegative = text
             this.callbackNegative = callback
+            return this
+        }
+
+        fun setOnDismissListener(listener: DialogInterface.OnDismissListener?): Builder {
+            this.callbackDismiss = listener
             return this
         }
 
