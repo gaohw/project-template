@@ -13,7 +13,7 @@ class PageResponse<T> {
         this.page = page
     }
 
-    var data: List<T>? = null
+    var data: ArrayList<T>? = null
     var page: Int = 0
     var total: Int = 0
 }
