@@ -9,7 +9,7 @@ import android.view.ViewOutlineProvider
  * Create by GaoHW at 2022-7-20 15:32.
  * Description:
  */
-class RoundOutlineProvider(val radius: Float) : ViewOutlineProvider() {
+class RoundOutlineProvider(private val radius: Float) : ViewOutlineProvider() {
 
     override fun getOutline(view: View?, outline: Outline?) {
         if (view == null || outline == null) {
@@ -17,4 +17,9 @@ class RoundOutlineProvider(val radius: Float) : ViewOutlineProvider() {
         }
         outline.setRoundRect(0, 0, view.width, view.height, radius)
     }
+}
+
+fun View.setRoundOutline(radius: Float) {
+    this.outlineProvider = RoundOutlineProvider(radius)
+    this.clipToOutline = true
 }
