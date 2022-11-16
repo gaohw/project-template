@@ -152,10 +152,11 @@ abstract class BaseFragment<VM : BaseViewModel, VB : ViewBinding> : Fragment(), 
         if (visible) {
             if (view == null) return
             if (isFirstVisible) {
-                isFirstVisible = false
                 onFragmentCreate()
+                isFirstVisible = false
+            } else {
+                onFragmentResume()
             }
-            onFragmentResume()
         } else {
             if (!isFirstVisible) {
                 onFragmentPause()
