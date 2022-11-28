@@ -4,8 +4,8 @@ import android.app.Application
 import android.content.Context
 import androidx.fragment.app.FragmentManager
 import com.ctsi.vip.lib.framework.base.lifecycles.IAppLifecycle
-import com.ctsi.vip.lib.framework.integration.ConfigModule
-import com.ctsi.vip.lib.framework.integration.GlobalConfigModule
+import com.ctsi.vip.lib.framework.base.integration.ConfigModule
+import com.ctsi.vip.lib.framework.base.integration.GlobalConfigModule
 import com.project.template.http.interceptors.TokenInterceptor
 
 /**
@@ -27,7 +27,9 @@ class AppModuleConfig : ConfigModule {
 
     }
 
-    override fun injectFragmentLifecycle(context: Context, lifecycles: List<FragmentManager.FragmentLifecycleCallbacks>) {
+    override fun injectFragmentLifecycle(
+        context: Context, lifecycles: List<FragmentManager.FragmentLifecycleCallbacks>
+    ) {
 
     }
 }

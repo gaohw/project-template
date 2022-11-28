@@ -1,4 +1,4 @@
-package com.ctsi.vip.lib.framework.integration
+package com.ctsi.vip.lib.framework.base.integration
 
 import com.ctsi.vip.lib.framework.http.RetrofitManager
 import okhttp3.HttpUrl

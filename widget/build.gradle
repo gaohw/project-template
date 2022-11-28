@@ -34,11 +34,11 @@ android {
 }
 
 dependencies {
-    implementation rootProject.ext.deps.appcompat
-    implementation rootProject.ext.deps.material
-    implementation rootProject.ext.deps.core_ktx
-    implementation implementation(project(':framework',))
+    implementation rootProject.ext.deps["appcompat"]
+    implementation rootProject.ext.deps["material"]
+    implementation rootProject.ext.deps["core-ktx"]
 
+    implementation(project(':framework'))
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

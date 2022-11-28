@@ -3,11 +3,15 @@ package com.ctsi.vip.lib.framework.base.delegate
 import android.app.Application
 import android.content.Context
 import androidx.fragment.app.FragmentManager
+import com.alibaba.android.arouter.launcher.ARouter
+import com.blankj.utilcode.util.Utils
 import com.ctsi.vip.lib.framework.AppContext
 import com.ctsi.vip.lib.framework.base.lifecycles.DefaultActivityLifecycle
 import com.ctsi.vip.lib.framework.base.lifecycles.IAppLifecycle
-import com.ctsi.vip.lib.framework.integration.ConfigModule
-import com.ctsi.vip.lib.framework.integration.GlobalConfigModule
+import com.ctsi.vip.lib.framework.http.RetrofitManager
+import com.ctsi.vip.lib.framework.http.state.NetworkStateHelper
+import com.ctsi.vip.lib.framework.base.integration.ConfigModule
+import com.ctsi.vip.lib.framework.base.integration.GlobalConfigModule
 import com.ctsi.vip.lib.framework.utils.ManifestParser
 
 
@@ -45,8 +49,6 @@ class AppDelegate constructor(context: Context) : IAppLifecycle {
     }
 
     override fun onCreate(application: Application) {
-        val globalConfigModule = getGlobalConfigModule(application)
-
         mApplication = application
         mApplication?.registerActivityLifecycleCallbacks(mDefaultActivityLifecycle)
         mActivityLifecycles.forEach { mApplication?.registerActivityLifecycleCallbacks(it) }
@@ -54,7 +56,20 @@ class AppDelegate constructor(context: Context) : IAppLifecycle {
         mAppLifecycles.forEach { it.onCreate(application) }
 
         //初始化
-        AppContext.debug(isDebug).init(application, globalConfigModule)
+        AppContext.init(application)
+        Utils.init(application) //工具类
+        if (isDebug) {
+            ARouter.openLog()
+            ARouter.openDebug()
+        }
+        ARouter.init(application) //ARouter
+        NetworkStateHelper.registerReceiver(application) //网络相关
+
+        val globalConfigModule = getGlobalConfigModule(application)
+        RetrofitManager.init(
+            application, globalConfigModule.mApiUrl, globalConfigModule.mInterceptors,
+            globalConfigModule.mRetrofitConfiguration, globalConfigModule.mOkhttpConfiguration
+        )
     }
 
     override fun onTerminate(application: Application) {

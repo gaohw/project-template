@@ -21,13 +21,12 @@ object RetrofitManager {
     private var okClient: OkHttpClient? = null
     private var retrofit: Retrofit? = null
 
-    fun init(
+    internal fun init(
         context: Context, apiUrl: HttpUrl?, interceptors: List<Interceptor>?,
         retrofitConfiguration: RetrofitConfiguration?, okhttpConfiguration: OkhttpConfiguration?
     ) {
         if (okClient == null) {
-            val builder = OkHttpClient.Builder()
-                .connectTimeout(TIME_OUT, TimeUnit.SECONDS)
+            val builder = OkHttpClient.Builder().connectTimeout(TIME_OUT, TimeUnit.SECONDS)
                 .readTimeout(TIME_OUT, TimeUnit.SECONDS)
             interceptors?.forEach { builder.addInterceptor(it) }
             okhttpConfiguration?.configOkhttp(context, builder)
@@ -38,8 +37,7 @@ object RetrofitManager {
         }
 
         if (retrofit == null) {
-            val builder = Retrofit.Builder()
-                .baseUrl(apiUrl!!).client(okClient!!)
+            val builder = Retrofit.Builder().baseUrl(apiUrl!!).client(okClient!!)
             retrofitConfiguration?.configRetrofit(context, builder)
             retrofit = builder.build()
         }

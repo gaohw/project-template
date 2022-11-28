@@ -1,4 +1,4 @@
-package com.ctsi.vip.lib.framework.integration
+package com.ctsi.vip.lib.framework.base.integration
 
 import android.app.Application
 import android.content.Context

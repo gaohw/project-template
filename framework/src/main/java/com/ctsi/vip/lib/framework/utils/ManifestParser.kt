@@ -3,7 +3,7 @@ package com.ctsi.vip.lib.framework.utils
 import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
-import com.ctsi.vip.lib.framework.integration.ConfigModule
+import com.ctsi.vip.lib.framework.base.integration.ConfigModule
 
 
 /**
@@ -36,8 +36,8 @@ class ManifestParser constructor(val context: Context?) {
     fun parse(): List<ConfigModule> {
         val modules = mutableListOf<ConfigModule>()
         try {
-            val appInfo: ApplicationInfo? = context?.packageManager
-                ?.getApplicationInfo(context.packageName, PackageManager.GET_META_DATA)
+            val appInfo: ApplicationInfo? =
+                context?.packageManager?.getApplicationInfo(context.packageName, PackageManager.GET_META_DATA)
             if (appInfo?.metaData != null) {
                 for (key in appInfo.metaData.keySet()) {
                     if (MODULE_VALUE == appInfo.metaData[key]) {

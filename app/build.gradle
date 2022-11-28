@@ -5,12 +5,13 @@ plugins {
     id 'kotlin-kapt'
 }
 
+def config = rootProject.ext
 android {
-    compileSdk rootProject.ext.android.compileSdkVersion
+    compileSdk config.android.compileSdkVersion
 
     defaultConfig {
-        minSdk rootProject.ext.android.minSdkVersion
-        targetSdk rootProject.ext.android.targetSdkVersion
+        minSdk config.android.minSdkVersion
+        targetSdk config.android.targetSdkVersion
 
         applicationId "com.project.template"
         versionCode 1
@@ -46,13 +47,13 @@ android {
 }
 
 dependencies {
-    implementation rootProject.ext.deps.core_ktx
-    implementation rootProject.ext.deps.appcompat
-    implementation rootProject.ext.deps.material
-    kapt rootProject.ext.deps.arouter_compiler
+    implementation config.deps["appcompat"]
+    implementation config.deps["material"]
+    implementation config.deps["core-ktx"]
+
     implementation(project(':widget'))
     implementation(project(":framework"))
-//    implementation "com.github.gaohw.template:common:1.0.0"
+//    implementation "com.github.gaohw.template:framework:1.0.1"
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
