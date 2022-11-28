@@ -73,7 +73,7 @@ class AppDelegate constructor(context: Context) : IAppLifecycle {
     }
 
     override fun onTerminate(application: Application) {
-
+        mAppLifecycles.forEach { it.onTerminate(application) }
     }
 
     private fun getGlobalConfigModule(context: Context): GlobalConfigModule {

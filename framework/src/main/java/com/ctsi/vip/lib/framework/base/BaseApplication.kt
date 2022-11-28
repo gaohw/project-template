@@ -9,28 +9,24 @@ import com.ctsi.vip.lib.framework.base.delegate.AppDelegate
  *
  * Desc:
  */
-abstract class BaseApplication : Application() {
+open class BaseApplication : Application() {
 
-    private var appDelegate: AppDelegate? = null
+    private val mAppDelegate: AppDelegate by lazy { AppDelegate(this) }
 
     override fun attachBaseContext(base: Context) {
         super.attachBaseContext(base)
-        if (appDelegate == null) {
-            appDelegate = AppDelegate(base)
-                .setDebugMode(isDebugMode())
-        }
-        appDelegate?.attachBaseContext(base)
+        mAppDelegate.setDebugMode(isDebugMode()).attachBaseContext(base)
     }
 
     override fun onCreate() {
         super.onCreate()
-        appDelegate?.onCreate(this)
+        mAppDelegate.onCreate(this)
     }
 
     override fun onTerminate() {
         super.onTerminate()
-        appDelegate?.onTerminate(this)
+        mAppDelegate.onTerminate(this)
     }
 
-    abstract fun isDebugMode(): Boolean
+    protected open fun isDebugMode(): Boolean = false
 }
