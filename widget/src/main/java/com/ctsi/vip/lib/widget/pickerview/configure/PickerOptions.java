@@ -31,6 +31,7 @@ public class PickerOptions {
 
     public static final int TYPE_PICKER_OPTIONS = 1;
     public static final int TYPE_PICKER_TIME = 2;
+    public static final int TYPE_PICKER_MULTI = 3;
 
     public OnOptionsSelectListener optionsSelectListener;
     public OnTimeSelectListener timeSelectListener;
