@@ -26,7 +26,9 @@ open class BaseRepository {
             BeanResponse<T> {
         return try {
             val response = requestOrigin(call)
-            JsonUtils.fromJson(response, object : TypeToken<BeanResponse<T>>() {}.type)
+            JsonUtils.fromJson<BeanResponse<T>>(
+                response, object : TypeToken<BeanResponse<T>>() {}.type
+            )
         } catch (e: Exception) {
             BeanResponse<T>().apply {
                 code = HttpConstants.Status.UnknownError
@@ -42,7 +44,7 @@ open class BaseRepository {
     suspend fun <T : Any> requestCus(call: suspend () -> Call<ResponseBody>): T? {
         return try {
             val response = requestOrigin(call)
-            JsonUtils.fromJson(response, object : TypeToken<BeanResponse<T>>() {}.type)
+            JsonUtils.fromJson<T>(response, object : TypeToken<T>() {}.type)
         } catch (e: Exception) {
             null
         }
