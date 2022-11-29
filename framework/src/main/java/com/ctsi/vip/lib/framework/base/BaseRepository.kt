@@ -22,29 +22,26 @@ open class BaseRepository {
 
     fun <T> createService(clazz: Class<T>): T = RetrofitManager.create(clazz)
 
-    suspend fun <T : Any> request(call: suspend () -> Call<ResponseBody>):
-            BeanResponse<T> {
-        return try {
-            val response = requestOrigin(call)
-            JsonUtils.fromJson<BeanResponse<T>>(
-                response, object : TypeToken<BeanResponse<T>>() {}.type
-            )
+    suspend fun <T> request(call: suspend () -> Call<ResponseBody>): BeanResponse<T> {
+        val response = try {
+            val result = requestOrigin(call)
+            JsonUtils.fromJson(result, object : TypeToken<BeanResponse<T>>() {}.type)
         } catch (e: Exception) {
             BeanResponse<T>().apply {
                 code = HttpConstants.Status.UnknownError
                 msg = e.message
             }
-        }.apply {
-            when (code) {
-                HttpConstants.Status.TokenInvalidError -> throw TokenInvalidException()
-            }
         }
+        when (response.code) {
+            HttpConstants.Status.TokenInvalidError -> throw TokenInvalidException()
+        }
+        return response
     }
 
-    suspend fun <T : Any> requestCus(call: suspend () -> Call<ResponseBody>): T? {
+    suspend fun <T> requestCus(call: suspend () -> Call<ResponseBody>): T? {
         return try {
-            val response = requestOrigin(call)
-            JsonUtils.fromJson<T>(response, object : TypeToken<T>() {}.type)
+            val result = requestOrigin(call)
+            JsonUtils.fromJson(result, object : TypeToken<T>() {}.type)
         } catch (e: Exception) {
             null
         }
