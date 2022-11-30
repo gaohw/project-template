@@ -1,7 +1,9 @@
 package com.ctsi.vip.lib.framework.utils
 
+import com.ctsi.vip.lib.framework.http.response.BeanResponse
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import java.io.StringReader
 import java.lang.reflect.Type
 import java.util.*
 
@@ -12,7 +14,7 @@ import java.util.*
  */
 object JsonUtils {
 
-    private val gson: Gson = Gson()
+    val gson: Gson = Gson()
 
     fun <T> toJson(obj: T): String = gson.toJson(obj)
 
@@ -26,5 +28,35 @@ object JsonUtils {
 
     fun <T> list2Json(list: List<T>): String {
         return toJson(list)
+    }
+
+    inline fun <reified T> jsonToBeanResponse(json: String?): BeanResponse<T>? {
+        if (json == null) {
+            return null
+        }
+        val typeBean = object : TypeToken<BeanResponse<T>>() {}.type
+        val typeT = object : TypeToken<T>() {}.type
+
+        val response = fromJson<BeanResponse<T>>(json, typeBean)
+        val dataJson = toJson(response.data)
+
+        return response.apply {
+            data = gson.fromJsonWithoutT<T>(dataJson, typeT)
+        }
+    }
+
+    inline fun <reified T> jsonToBean(json: String?): T? {
+        if (json == null) {
+            return null
+        }
+        return gson.fromJsonWithoutT<T>(json, object : TypeToken<T>() {}.type)
+    }
+
+    inline fun <reified T> Gson.fromJsonWithoutT(json: String?, typeOfT: Type): T? {
+        if (json == null) {
+            return null
+        }
+        val reader = StringReader(json)
+        return fromJson(reader, typeOfT)
     }
 }

@@ -5,6 +5,7 @@ import com.ctsi.vip.lib.framework.http.HttpConstants
 import com.ctsi.vip.lib.framework.http.RetrofitManager
 import com.ctsi.vip.lib.framework.http.response.BeanResponse
 import com.ctsi.vip.lib.framework.utils.JsonUtils
+import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -22,10 +23,10 @@ open class BaseRepository {
 
     fun <T> createService(clazz: Class<T>): T = RetrofitManager.create(clazz)
 
-    suspend fun <T> request(call: suspend () -> Call<ResponseBody>): BeanResponse<T> {
+    suspend inline fun <reified T> request(noinline call: suspend () -> Call<ResponseBody>): BeanResponse<T> {
         val response = try {
             val result = requestOrigin(call)
-            JsonUtils.fromJson(result, object : TypeToken<BeanResponse<T>>() {}.type)
+            JsonUtils.jsonToBeanResponse<T>(result)!!
         } catch (e: Exception) {
             BeanResponse<T>().apply {
                 code = HttpConstants.Status.UnknownError
@@ -38,10 +39,9 @@ open class BaseRepository {
         return response
     }
 
-    suspend fun <T> requestCus(call: suspend () -> Call<ResponseBody>): T? {
+    suspend inline fun <reified T> requestCus(noinline call: suspend () -> Call<ResponseBody>): T? {
         return try {
-            val result = requestOrigin(call)
-            JsonUtils.fromJson(result, object : TypeToken<T>() {}.type)
+            JsonUtils.jsonToBean<T>(requestOrigin(call))
         } catch (e: Exception) {
             null
         }
@@ -51,12 +51,11 @@ open class BaseRepository {
         return withContext(Dispatchers.IO) {
             try {
                 val request = call.invoke().execute()
-                val response: String =
-                    if (request.isSuccessful && request.body() != null) {
-                        request.body()!!.string()
-                    } else {
-                        generateErrorJson("${request.code()}", request.errorBody()?.string())
-                    }
+                val response: String = if (request.isSuccessful && request.body() != null) {
+                    request.body()!!.string()
+                } else {
+                    generateErrorJson("${request.code()}", request.errorBody()?.string())
+                }
                 response
             } catch (e: Exception) {
                 generateErrorJson(HttpConstants.Status.NetError, e.message)
