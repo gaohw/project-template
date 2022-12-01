@@ -26,8 +26,8 @@ class BooleanResult<T> {
             return BooleanResult(data)
         }
 
-        fun failed(msg: String): BooleanResult<*> {
-            return BooleanResult<Any?>(msg)
+        fun <T> failed(msg: String): BooleanResult<T> {
+            return BooleanResult(msg)
         }
     }
 }

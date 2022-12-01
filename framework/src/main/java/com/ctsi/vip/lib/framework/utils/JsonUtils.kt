@@ -18,17 +18,11 @@ object JsonUtils {
 
     fun <T> toJson(obj: T): String = gson.toJson(obj)
 
+    fun <T> list2Json(list: List<T>): String = toJson(list)
+
     fun <T> fromJson(json: String, obj: Type): T = gson.fromJson(json, obj)
 
     fun <T> fromJson(json: String, obj: Class<T>): T = gson.fromJson(json, obj)
-
-    fun <T> json2List(json: String): List<T> {
-        return gson.fromJson(json, object : TypeToken<LinkedList<T>>() {}.type)
-    }
-
-    fun <T> list2Json(list: List<T>): String {
-        return toJson(list)
-    }
 
     inline fun <reified T> jsonToBeanResponse(json: String?): BeanResponse<T>? {
         if (json == null) {
