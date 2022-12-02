@@ -196,6 +196,14 @@ public class RichText implements ImageGetterWrapper, ImageLoadNotify {
         }
         config.imageGetter.registerImageLoadNotify(this);
         count = cachedSpannedParser.parse(spannableStringBuilder, this, config);
+
+        // 如果内容最后以\n\n结尾，那么去除一个，避免底部出现大部分空白
+        if (spannableStringBuilder.length() > 2) {
+            if (spannableStringBuilder.charAt(spannableStringBuilder.length() - 1) == '\n' &&
+                    spannableStringBuilder.charAt(spannableStringBuilder.length() - 2) == '\n') {
+                spannableStringBuilder.delete(spannableStringBuilder.length() - 1, spannableStringBuilder.length());
+            }
+        }
         return spannableStringBuilder;
     }
 
