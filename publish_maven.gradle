@@ -4,12 +4,15 @@ afterEvaluate {
     publishing {
         publications {
             maven(MavenPublication) {
+                println(" ======================= ${project.name}")
                 groupId = 'com.github.gaohw.template'
-                artifactId = 'framework'
-                version = '1.0.6'
+                artifactId = project.name
+                version = '1.0.8'
 
+                def path = "$buildDir/outputs/aar/${project.name}-release.aar"
+                println(" ======================= $path")
                 artifact androidSourcesJar
-                artifact("$buildDir/outputs/aar/framework-release.aar")
+                artifact(path)
 
                 pom.withXml {
                     def dependenciesNode = asNode().appendNode('dependencies')
