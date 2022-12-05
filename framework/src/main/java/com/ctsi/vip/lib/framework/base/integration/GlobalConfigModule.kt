@@ -16,11 +16,14 @@ class GlobalConfigModule private constructor(builder: Builder) {
     internal var mRetrofitConfiguration: RetrofitManager.RetrofitConfiguration? = null
     internal var mOkhttpConfiguration: RetrofitManager.OkhttpConfiguration? = null
 
+    internal var globalErrorHandler: ErrorHandler? = null
+
     init {
         this.mApiUrl = builder.apiUrl
         this.mInterceptors = builder.interceptors
         this.mRetrofitConfiguration = builder.retrofitConfiguration
         this.mOkhttpConfiguration = builder.okhttpConfiguration
+        this.globalErrorHandler = builder.errorHandler
     }
 
     class Builder internal constructor() {
@@ -28,6 +31,7 @@ class GlobalConfigModule private constructor(builder: Builder) {
         internal var interceptors: MutableList<Interceptor> = mutableListOf()
         internal var retrofitConfiguration: RetrofitManager.RetrofitConfiguration? = null
         internal var okhttpConfiguration: RetrofitManager.OkhttpConfiguration? = null
+        internal var errorHandler: ErrorHandler? = null
 
         fun baseUrl(url: String): Builder {
             this.apiUrl = url.toHttpUrlOrNull()
@@ -47,6 +51,11 @@ class GlobalConfigModule private constructor(builder: Builder) {
 
         fun setOkhttpConfiguration(configuration: RetrofitManager.OkhttpConfiguration): Builder {
             this.okhttpConfiguration = configuration
+            return this
+        }
+
+        fun setGlobalErrorHandler(errorHandler: ErrorHandler?): Builder {
+            this.errorHandler = errorHandler
             return this
         }
 

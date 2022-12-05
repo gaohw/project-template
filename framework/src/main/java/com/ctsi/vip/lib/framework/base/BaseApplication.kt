@@ -2,6 +2,7 @@ package com.ctsi.vip.lib.framework.base
 
 import android.app.Application
 import android.content.Context
+import com.ctsi.vip.lib.framework.AppContext
 import com.ctsi.vip.lib.framework.base.delegate.AppDelegate
 
 /**
@@ -11,21 +12,20 @@ import com.ctsi.vip.lib.framework.base.delegate.AppDelegate
  */
 open class BaseApplication : Application() {
 
-    private val mAppDelegate: AppDelegate by lazy { AppDelegate(this) }
-
     override fun attachBaseContext(base: Context) {
         super.attachBaseContext(base)
-        mAppDelegate.setDebugMode(isDebugMode()).attachBaseContext(base)
+        AppContext.init(this)
+        AppContext.getAppDelegate()?.setDebugMode(isDebugMode())?.attachBaseContext(base)
     }
 
     override fun onCreate() {
         super.onCreate()
-        mAppDelegate.onCreate(this)
+        AppContext.getAppDelegate()?.onCreate(this)
     }
 
     override fun onTerminate() {
         super.onTerminate()
-        mAppDelegate.onTerminate(this)
+        AppContext.getAppDelegate()?.onTerminate(this)
     }
 
     protected open fun isDebugMode(): Boolean = false

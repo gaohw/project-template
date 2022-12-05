@@ -1,8 +1,9 @@
 package com.ctsi.vip.lib.framework
 
 import android.app.Application
-import android.content.Context
-import com.blankj.utilcode.util.LogUtils
+import com.ctsi.vip.lib.framework.base.delegate.AppDelegate
+import com.ctsi.vip.lib.framework.base.integration.ErrorHandler
+import com.ctsi.vip.lib.framework.base.integration.GlobalConfigModule
 import java.lang.ref.WeakReference
 
 /**
@@ -12,18 +13,22 @@ import java.lang.ref.WeakReference
  */
 object AppContext {
 
-    private var mAppContext: WeakReference<Context>? = null
+    private var delegateReference: WeakReference<AppDelegate>? = null
 
     fun init(application: Application): AppContext {
-        if (mAppContext != null) {
-            LogUtils.d("AppContext has already bean inited!!!")
-            return this
-        }
-        mAppContext = WeakReference(application)
+        //        if (delegateReference != null) {
+        //            LogUtils.d("AppContext has already bean inited!!!")
+        //            return this
+        //        }
+        delegateReference = WeakReference(AppDelegate(application))
         return this
     }
 
-    fun getContext(): Context? = mAppContext?.get()
+    fun getAppDelegate(): AppDelegate? = delegateReference?.get()
 
-    fun getApplication(): Application? = getContext() as Application?
+    fun getApplication(): Application? = getAppDelegate()?.application
+
+    fun getGlobalConfigModule(): GlobalConfigModule? = getAppDelegate()?.getGlobalConfigModule()
+
+    fun getGlobalErrorHandler(): ErrorHandler? = getGlobalConfigModule()?.globalErrorHandler
 }

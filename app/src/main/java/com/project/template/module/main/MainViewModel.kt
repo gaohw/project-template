@@ -13,14 +13,10 @@ class MainViewModel : BaseViewModel() {
     fun getUnreadMessage() {
         launch(
             onError = {
-                LogUtils.eTag("OkHttp", "========> ${it.message}")
+                LogUtils.eTag("OkHttp", "========> ${it?.message}")
             }) {
             val num = MainRepository.getAllUnreadMessage()
             LogUtils.eTag("OkHttp", "========> $num")
         }
-    }
-
-    override fun goLogin() {
-
     }
 }
