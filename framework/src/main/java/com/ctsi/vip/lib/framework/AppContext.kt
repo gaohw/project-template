@@ -13,18 +13,18 @@ import java.lang.ref.WeakReference
  */
 object AppContext {
 
-    private var delegateReference: WeakReference<AppDelegate>? = null
+    private var appDelegate: AppDelegate? = null
 
     fun init(application: Application): AppContext {
         //        if (delegateReference != null) {
         //            LogUtils.d("AppContext has already bean inited!!!")
         //            return this
         //        }
-        delegateReference = WeakReference(AppDelegate(application))
+        appDelegate = AppDelegate(application)
         return this
     }
 
-    fun getAppDelegate(): AppDelegate? = delegateReference?.get()
+    fun getAppDelegate(): AppDelegate? = appDelegate
 
     fun getApplication(): Application? = getAppDelegate()?.application
 
