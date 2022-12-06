@@ -40,10 +40,7 @@ dependencies {
 
     implementation(project(':framework'))
     api rootProject.ext.deps["image-selector"]
-
-    implementation 'com.jakewharton:disklrucache:2.0.2'
-    implementation 'com.zzhoujay:html:1.0.2'
-    implementation 'com.zzhoujay.markdown:markdown:1.0.5'
+    api rootProject.ext.deps["image-previewer"]
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
