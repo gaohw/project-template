@@ -33,10 +33,10 @@ open class BaseViewModel : ViewModel(), LifecycleObserver {
         onStart?.invoke()     //before request
         viewModelScope.launch {
             try {
-                withTimeout(10000) { requestBlock() }
+                withTimeout(getTimeOutMills()) { requestBlock() }
             } catch (e: Exception) {
                 e.printStackTrace()
-                cancel("${e.message}}", e)
+                cancel("${e.message}", e)
             }
         }.invokeOnCompletion { throwable ->
             if (AppContext.getGlobalErrorHandler()?.handleError(throwable) != true) {
@@ -44,5 +44,9 @@ open class BaseViewModel : ViewModel(), LifecycleObserver {
             }
             onComplete?.invoke()      //after request
         }
+    }
+
+    protected open fun getTimeOutMills(): Long {
+        return AppContext.getGlobalConfigModule()?.getTimeOutMills() ?: 10000
     }
 }

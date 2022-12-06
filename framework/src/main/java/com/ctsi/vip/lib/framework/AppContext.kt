@@ -30,5 +30,5 @@ object AppContext {
 
     fun getGlobalConfigModule(): GlobalConfigModule? = getAppDelegate()?.getGlobalConfigModule()
 
-    fun getGlobalErrorHandler(): ErrorHandler? = getGlobalConfigModule()?.globalErrorHandler
+    fun getGlobalErrorHandler(): ErrorHandler? = getGlobalConfigModule()?.getGlobalErrorHandler()
 }

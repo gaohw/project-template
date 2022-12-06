@@ -67,8 +67,8 @@ class AppDelegate constructor(val application: Application) : IAppLifecycle {
 
         getGlobalConfigModule(application)
         RetrofitManager.init(
-            application, globalConfigModule?.mApiUrl, globalConfigModule?.mInterceptors,
-            globalConfigModule?.mRetrofitConfiguration, globalConfigModule?.mOkhttpConfiguration
+            application, globalConfigModule?.getApiUrl(), globalConfigModule?.getHttpInterceptors(),
+            globalConfigModule?.getRetrofitConfiguration(), globalConfigModule?.getOkhttpConfiguration()
         )
     }
 
