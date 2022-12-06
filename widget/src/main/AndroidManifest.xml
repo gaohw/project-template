@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.ctsi.vip.lib.widget">
 
+    <!-- 网络权限 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!--  桌面快捷方式  -->
     <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
     <uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT" />
@@ -9,7 +13,9 @@
 
     <!-- 存储权限 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
     <!-- 相机权限 -->
     <uses-permission android:name="android.permission.CAMERA" />
 
@@ -18,16 +24,24 @@
         <activity
             android:name="com.donkingliang.imageselector.ImageSelectorActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
+            android:exported="false"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <!-- 图片预览Activity -->
         <activity
             android:name="com.donkingliang.imageselector.PreviewActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
+            android:exported="false"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <!-- 图片剪切Activity -->
         <activity
             android:name="com.donkingliang.imageselector.ClipImageActivity"
+            android:exported="false"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <!-- 图片查看 -->
+        <activity
+            android:name="cc.shinichi.library.view.ImagePreviewActivity"
+            android:exported="false"
+            android:theme="@style/image_preview_activity"
+            tools:replace="android:theme" />
     </application>
-
 </manifest>
