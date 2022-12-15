@@ -25,6 +25,9 @@ interface ApiService {
     @PUT
     fun doJsonPut(@Url url: String, @Body body: RequestBody): Call<ResponseBody>
 
+    @HTTP(method = "DELETE", hasBody = true)
+    fun doJsonDelete(@Url url: String, @Body body: RequestBody): Call<ResponseBody>
+
     @POST
     @Multipart
     fun upload(@Url url: String?, @Part file: MultipartBody.Part?): Call<ResponseBody>
