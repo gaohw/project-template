@@ -39,8 +39,10 @@ open class BaseViewModel : ViewModel(), LifecycleObserver {
                 cancel("${e.message}", e)
             }
         }.invokeOnCompletion { throwable ->
-            if (AppContext.getGlobalErrorHandler()?.handleError(throwable) != true) {
-                onError?.invoke(throwable)
+            if (throwable != null) {
+                if (AppContext.getGlobalErrorHandler()?.handleError(throwable) != true) {
+                    onError?.invoke(throwable)
+                }
             }
             onComplete?.invoke()      //after request
         }
