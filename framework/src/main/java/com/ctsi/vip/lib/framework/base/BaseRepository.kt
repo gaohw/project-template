@@ -28,12 +28,12 @@ open class BaseRepository {
             JsonUtils.fromJson(result, object : TypeToken<BeanResponse<T>>() {}.type)
         } catch (e: Exception) {
             BeanResponse<T>().apply {
-                code = HttpConstants.Status.UnknownError
+                code = HttpConstants.Error.UnknownError
                 msg = e.message
             }
         }
         when (response.code) {
-            HttpConstants.Status.TokenInvalidError -> throw TokenInvalidException()
+            HttpConstants.Error.TokenInvalidError -> throw TokenInvalidException()
         }
         return response
     }
@@ -59,7 +59,7 @@ open class BaseRepository {
                     }
                 response
             } catch (e: Exception) {
-                generateErrorJson(HttpConstants.Status.NetError, e.message)
+                generateErrorJson(HttpConstants.Error.NetError, e.message)
             }
         }
     }

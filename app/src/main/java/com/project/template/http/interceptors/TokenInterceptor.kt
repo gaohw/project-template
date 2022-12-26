@@ -16,17 +16,17 @@ class TokenInterceptor : Interceptor {
         val request = chain.request()
         val newBuilder = request.newBuilder()
 
-        val token = SPUtils.getInstance().getString(HttpConstants.KEY_ACCESS_TOKEN)
+        val token = SPUtils.getInstance().getString("key_access_token")
         newBuilder.addHeader("Authorization", "Bearer $token")
 
-        val cacheCookie = SPUtils.getInstance().getString(HttpConstants.KEY_LOGIN_COOKIE)
+        val cacheCookie = SPUtils.getInstance().getString("key_login_cookie")
         if (!cacheCookie.isNullOrEmpty()) {
             newBuilder.addHeader("Cookie", cacheCookie)
         }
 
         val response = chain.proceed(newBuilder.build())
         response.header("Set-Cookie")?.let {
-            SPUtils.getInstance().put(HttpConstants.KEY_LOGIN_COOKIE, it)
+            SPUtils.getInstance().put("key_login_cookie", it)
         }
         return response
     }
