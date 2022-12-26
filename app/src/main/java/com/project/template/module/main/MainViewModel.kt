@@ -1,6 +1,7 @@
 package com.project.template.module.main
 
 import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.ctsi.vip.lib.framework.base.BaseViewModel
 
 /**
@@ -13,14 +14,9 @@ class MainViewModel : BaseViewModel() {
     fun getUnreadMessage() {
         launch(
             onError = {
-                LogUtils.eTag("OkHttp", "========> ${it.message}")
+                ToastUtils.showShort(it?.message)
             }) {
-            val num = MainRepository.getAllUnreadMessage()
-            LogUtils.eTag("OkHttp", "========> $num")
+            MainRepository.getAllUnreadMessage()
         }
-    }
-
-    override fun goLogin() {
-
     }
 }

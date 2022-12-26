@@ -43,7 +43,7 @@ object RetrofitManager {
         }
     }
 
-    internal fun <T> create(service: Class<T>): T = retrofit!!.create(service)
+    fun <T> create(service: Class<T>): T = retrofit!!.create(service)
 
     /**
      * [Retrofit] 自定义配置接口

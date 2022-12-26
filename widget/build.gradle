@@ -39,8 +39,12 @@ dependencies {
     implementation rootProject.ext.deps["core-ktx"]
 
     implementation(project(':framework'))
+    api rootProject.ext.deps["image-selector"]
+    api rootProject.ext.deps["image-previewer"]
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 }
+
+apply from: "../publish_maven.gradle"

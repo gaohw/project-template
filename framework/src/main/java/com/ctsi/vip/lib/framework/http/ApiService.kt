@@ -22,8 +22,11 @@ interface ApiService {
     @FormUrlEncoded
     fun doPut(@Url url: String, @FieldMap params: Map<String, @JvmSuppressWildcards Any>): Call<ResponseBody>
 
-    @POST
+    @PUT
     fun doJsonPut(@Url url: String, @Body body: RequestBody): Call<ResponseBody>
+
+    @HTTP(method = "DELETE", hasBody = true)
+    fun doJsonDelete(@Url url: String, @Body body: RequestBody): Call<ResponseBody>
 
     @POST
     @Multipart

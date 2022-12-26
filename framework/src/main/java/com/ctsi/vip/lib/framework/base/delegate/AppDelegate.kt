@@ -20,10 +20,11 @@ import com.ctsi.vip.lib.framework.utils.ManifestParser
  * Create by GaoHW at 2022-10-13 9:56.
  * Description:
  */
-class AppDelegate constructor(context: Context) : IAppLifecycle {
+class AppDelegate constructor(val application: Application) : IAppLifecycle {
 
     private var isDebug: Boolean = false
     private var mApplication: Application? = null
+    private var globalConfigModule: GlobalConfigModule? = null
     private val mDefaultActivityLifecycle by lazy { DefaultActivityLifecycle(mFragmentLifecycles) }
 
     private val mModules: MutableList<ConfigModule>
@@ -32,10 +33,10 @@ class AppDelegate constructor(context: Context) : IAppLifecycle {
     private val mFragmentLifecycles = mutableListOf<FragmentManager.FragmentLifecycleCallbacks>()
 
     init {
-        this.mModules = ManifestParser(context).parse().toMutableList()
+        this.mModules = ManifestParser(application).parse().toMutableList()
         for (module in mModules) {
-            module.injectAppLifecycle(context, mAppLifecycles)
-            module.injectActivityLifecycle(context, mActivityLifecycles)
+            module.injectAppLifecycle(application, mAppLifecycles)
+            module.injectActivityLifecycle(application, mActivityLifecycles)
         }
     }
 
@@ -56,7 +57,6 @@ class AppDelegate constructor(context: Context) : IAppLifecycle {
         mAppLifecycles.forEach { it.onCreate(application) }
 
         //初始化
-        AppContext.init(application)
         Utils.init(application) //工具类
         if (isDebug) {
             ARouter.openLog()
@@ -65,10 +65,10 @@ class AppDelegate constructor(context: Context) : IAppLifecycle {
         ARouter.init(application) //ARouter
         NetworkStateHelper.registerReceiver(application) //网络相关
 
-        val globalConfigModule = getGlobalConfigModule(application)
+        getGlobalConfigModule(application)
         RetrofitManager.init(
-            application, globalConfigModule.mApiUrl, globalConfigModule.mInterceptors,
-            globalConfigModule.mRetrofitConfiguration, globalConfigModule.mOkhttpConfiguration
+            application, globalConfigModule?.getApiUrl(), globalConfigModule?.getHttpInterceptors(),
+            globalConfigModule?.getRetrofitConfiguration(), globalConfigModule?.getOkhttpConfiguration()
         )
     }
 
@@ -76,12 +76,14 @@ class AppDelegate constructor(context: Context) : IAppLifecycle {
         mAppLifecycles.forEach { it.onTerminate(application) }
     }
 
-    private fun getGlobalConfigModule(context: Context): GlobalConfigModule {
+    private fun getGlobalConfigModule(context: Context) {
         val builder = GlobalConfigModule.Builder()
         for (module in mModules) {
             module.applyOptions(context, builder)
         }
         mModules.clear()
-        return builder.build()
+        globalConfigModule = builder.build()
     }
+
+    fun getGlobalConfigModule(): GlobalConfigModule? = globalConfigModule
 }

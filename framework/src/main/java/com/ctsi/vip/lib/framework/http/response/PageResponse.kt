@@ -9,10 +9,12 @@ class PageResponse<T> {
 
     constructor()
 
-    constructor(page: Int) {
+    constructor(page: Int, total: Int) {
         this.page = page
+        this.total = total
     }
 
+    var list: MutableList<T>? = null
     var data: MutableList<T>? = null
     var page: Int = 0
     var total: Int = 0

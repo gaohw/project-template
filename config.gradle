@@ -39,6 +39,8 @@ ext {
             "smart-refrash_header"    : 'io.github.scwang90:refresh-header-classics:2.0.5',
             "smart-refrash_footer"    : 'io.github.scwang90:refresh-footer-classics:2.0.5',
             "base-quick-adapter"      : 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.7',
+            "image-selector"          : "com.github.donkingliang:ImageSelector:2.2.1",
+            "image-previewer"         : "com.github.SherlockGougou:BigImageViewPager:androidx-6.2.1",
 
             "gson"                    : 'com.google.code.gson:gson:2.9.0',
             "arouter"                 : 'com.alibaba:arouter-api:1.5.2',

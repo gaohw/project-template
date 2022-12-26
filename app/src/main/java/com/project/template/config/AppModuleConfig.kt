@@ -16,7 +16,9 @@ import com.project.template.http.interceptors.TokenInterceptor
 class AppModuleConfig : ConfigModule {
 
     override fun applyOptions(context: Context, builder: GlobalConfigModule.Builder) {
-        builder.baseUrl("http://27.128.228.208:9067/").addInterceptor(TokenInterceptor())
+        builder.baseUrl("http://27.128.228.208:9000/")
+            .addInterceptor(TokenInterceptor())
+            .setRequestTimeOut(2000)
     }
 
     override fun injectAppLifecycle(context: Context, lifecycles: List<IAppLifecycle>) {

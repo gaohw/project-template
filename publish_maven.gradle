@@ -1,0 +1,55 @@
+apply plugin: 'maven-publish'
+
+afterEvaluate {
+    publishing {
+        publications {
+            maven(MavenPublication) {
+                println(" ======================= ${project.name}")
+                groupId = 'com.github.gaohw.template'
+                artifactId = project.name
+                version = '1.0.11'
+
+                def path = "$buildDir/outputs/aar/${project.name}-release.aar"
+                println(" ======================= $path")
+                artifact androidSourcesJar
+                artifact(path)
+
+                pom.withXml {
+                    def dependenciesNode = asNode().appendNode('dependencies')
+                    configurations.api.allDependencies.each {
+                        def dependencyNode = dependenciesNode.appendNode('dependency')
+                        dependencyNode.appendNode('groupId', it.group)
+                        dependencyNode.appendNode('artifactId', it.name)
+                        dependencyNode.appendNode('version', it.version)
+                        dependencyNode.appendNode('scope', 'implementation')
+                    }
+
+                    configurations.implementation.allDependencies.each {
+                        def dependencyNode = dependenciesNode.appendNode('dependency')
+                        dependencyNode.appendNode('groupId', it.group)
+                        dependencyNode.appendNode('artifactId', it.name)
+                        dependencyNode.appendNode('version', it.version)
+                        dependencyNode.appendNode('scope', 'implementation')
+                    }
+                }
+            }
+        }
+    }
+    //maven仓库配置
+    repositories {
+        mavenLocal()//本地仓库(默认)
+//        maven {
+//            //本地maven地址配置(自定义，也可以是一个maven仓库地址)
+//            url = uri("${rootProject.projectDir}/repo")
+//        }
+    }
+}
+
+task androidSourcesJar(type: Jar) {
+    archiveClassifier = 'sources'
+    from android.sourceSets.main.java.srcDirs
+}
+
+artifacts {
+    archives androidSourcesJar
+}
