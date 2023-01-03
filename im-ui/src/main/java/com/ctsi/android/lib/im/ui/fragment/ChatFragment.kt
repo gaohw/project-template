@@ -36,14 +36,6 @@ class ChatFragment : Fragment(), MessageChatListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mBinding.layoutChatTitle.setPadding(0, BarUtils.getStatusBarHeight(), 0, 0)
-
-        mBinding.btnSend.setOnClickListener {
-            val user = mBinding.edtUser.text
-            val content = mBinding.edtContent.text
-            CtsiIM.messageManager()
-                .sendTextMessage("$user", "$content")
-        }
-
         chatAdapter = ChatAdapter(CtsiIM.messageManager().getMessageChatList())
         chatAdapter?.setEmptyView(layoutInflater.inflate(R.layout.im_layout_chat_empty, null)
             .apply {
