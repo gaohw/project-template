@@ -5,8 +5,6 @@ import com.ctsi.vip.lib.framework.http.HttpConstants
 import com.ctsi.vip.lib.framework.http.RetrofitManager
 import com.ctsi.vip.lib.framework.http.response.BeanResponse
 import com.ctsi.vip.lib.framework.utils.JsonUtils
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.ResponseBody

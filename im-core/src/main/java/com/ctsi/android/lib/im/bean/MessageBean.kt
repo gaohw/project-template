@@ -2,6 +2,7 @@ package com.ctsi.android.lib.im.bean
 
 import com.blankj.utilcode.util.TimeUtils
 import com.ctsi.android.lib.im.enums.Def.MessageType
+import com.ctsi.android.lib.im.manager.UserManager
 import java.util.*
 
 /**
@@ -45,6 +46,8 @@ class MessageBean {
         }
         return null
     }
+
+    fun isSelf() = msgFrom == UserManager.currentUser()?.userId
 
     fun toSendMessage(): String {
         return "{\"system\":\"ctsiapp\",\"from\":\"$msgFrom\",\"to\":\"$msgTo\",\"content\":\"$msgContent\"}"

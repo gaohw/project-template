@@ -5,7 +5,6 @@ import android.content.Context
 import androidx.fragment.app.FragmentManager
 import com.alibaba.android.arouter.launcher.ARouter
 import com.blankj.utilcode.util.Utils
-import com.ctsi.vip.lib.framework.AppContext
 import com.ctsi.vip.lib.framework.base.lifecycles.DefaultActivityLifecycle
 import com.ctsi.vip.lib.framework.base.lifecycles.IAppLifecycle
 import com.ctsi.vip.lib.framework.http.RetrofitManager

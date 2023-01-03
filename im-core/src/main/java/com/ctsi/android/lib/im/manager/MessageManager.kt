@@ -32,7 +32,7 @@ internal object MessageManager : IMessageManager, IMWebSocketCallback {
 
     fun connect() {
         //连接
-        val user = UserManager.getCurrentUser()
+        val user = UserManager.currentUser()
         if (user != null) {
             val socket = WEB_SOCKET + WEB_SOCKET_SYSTEM + "/${user.userId}"
             messageSocket = socket
@@ -55,7 +55,7 @@ internal object MessageManager : IMessageManager, IMWebSocketCallback {
     }
 
     override fun sendTextMessage(to: String, content: String) {
-        val user = UserManager.getCurrentUser()
+        val user = UserManager.currentUser()
         if (user != null) {
             val message = MessageBean(Def.TYPE_TEXT).apply {
                 msgFrom = user.userId
@@ -67,13 +67,15 @@ internal object MessageManager : IMessageManager, IMWebSocketCallback {
             addUser(to)
             addMessage(to, message)
             addMessageChat(to, message)
-            IMConnectManager.sendMessage("$messageSocket", message.toSendMessage())
+            if (user.userId != to) {
+                IMConnectManager.sendMessage("$messageSocket", message.toSendMessage())
+            }
         }
     }
 
     override fun getMessageChatList(): MutableList<ChatBean>? = messageChatCache
 
-    override fun getMessageList(id: String): MutableList<MessageBean>? = messageCache[id]
+    override fun getMessageList(id: String, page: Int): MutableList<MessageBean>? = messageCache[id]
 
     override fun onReceiveMessage(msg: String) {
         try {
@@ -122,9 +124,9 @@ internal object MessageManager : IMessageManager, IMWebSocketCallback {
             messageList = mutableListOf(message)
             messageCache[id] = messageList
         } else {
-            messageList.add(message)
+            messageList.add(0, message)
         }
-        if (messageListener != null) {
+        if (messageListener?.getChatId() == id) {
             message.readStatus = 1
             runOnUiThread { messageListener?.onReceiveMessage(message) }
         }
@@ -164,5 +166,16 @@ internal object MessageManager : IMessageManager, IMWebSocketCallback {
 
     override fun setMessageChatListener(listener: MessageChatListener?) {
         messageChatListener = listener
+    }
+
+    override fun requestChatList(page: Int) {
+        runOnUiThread { messageChatListener?.onChatList(page, messageChatCache) }
+    }
+
+    override fun readMessageInChat(chatId: String) {
+        val chat = messageChatCache.find { it.user?.userId == chatId }
+        if (chat != null) {
+            chat.unreadCount = 0
+        }
     }
 }

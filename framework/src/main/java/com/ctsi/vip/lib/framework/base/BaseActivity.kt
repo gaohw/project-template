@@ -52,8 +52,8 @@ abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatAct
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         NetworkStateHelper.removeObserver(this)
+        super.onDestroy()
     }
 
     private fun createViewModel(type: Type) {

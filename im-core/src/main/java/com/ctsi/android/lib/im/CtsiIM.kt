@@ -22,7 +22,7 @@ object CtsiIM {
     }
 
     fun init(context: Context) {
-
+        //do nothing
     }
 
     fun userManager(): IUserManager = UserManager

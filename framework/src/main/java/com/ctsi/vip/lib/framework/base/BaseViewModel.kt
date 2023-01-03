@@ -3,7 +3,6 @@ package com.ctsi.vip.lib.framework.base
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.blankj.utilcode.util.ToastUtils
 import com.ctsi.vip.lib.framework.AppContext
 import com.ctsi.vip.lib.framework.utils.SingleLiveEvent
 import com.ctsi.vip.lib.framework.widget.dialog.Status

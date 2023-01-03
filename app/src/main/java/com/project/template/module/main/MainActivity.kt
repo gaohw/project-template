@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
 import com.blankj.utilcode.util.ToastUtils
+import com.ctsi.android.lib.im.ui.fragment.ChatFragment
 import com.ctsi.vip.lib.framework.base.BaseActivity
 import com.project.template.R
 import com.project.template.databinding.ActivityMainBinding
@@ -20,9 +21,11 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
     private var lastBackTime: Long = 0
 
-    private val titles = listOf("首页", "我的")
-    private val tabIcons = listOf(R.drawable.selector_tab_home, R.drawable.selector_tab_mine)
-    private val fragments = listOf<Fragment>(HomeFragment(), MineFragment())
+    private val titles = listOf("首页", "消息", "我的")
+    private val tabIcons = listOf(
+        R.drawable.selector_tab_home, R.drawable.selector_tab_message, R.drawable.selector_tab_mine
+    )
+    private val fragments = listOf(HomeFragment(), ChatFragment(), MineFragment())
 
     override fun onActivityCreate(savedInstanceState: Bundle?) {
         mBinding.vpMain.adapter = object : FragmentPagerAdapter(supportFragmentManager) {

@@ -13,5 +13,7 @@ interface MessageChatListener {
 
     }
 
+    fun onChatList(page: Int, data: List<ChatBean>?) {}
+
     fun onReceiveMessage(chat: ChatBean, oldPosition: Int)
 }

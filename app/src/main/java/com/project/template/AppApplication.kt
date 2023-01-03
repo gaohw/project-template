@@ -1,5 +1,6 @@
 package com.project.template
 
+import com.ctsi.android.lib.im.CtsiIM
 import com.ctsi.vip.lib.framework.base.BaseApplication
 
 /**
@@ -11,6 +12,8 @@ class AppApplication : BaseApplication() {
 
     override fun onCreate() {
         super.onCreate()
+        CtsiIM.init(this)
+        CtsiIM.userManager().setCurrentUser("gao")
     }
 
     override fun isDebugMode(): Boolean = BuildConfig.DEBUG

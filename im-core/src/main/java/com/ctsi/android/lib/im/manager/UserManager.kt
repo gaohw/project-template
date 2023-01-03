@@ -30,7 +30,7 @@ internal object UserManager : IUserManager {
         MessageManager.connect()        //连接服务期
     }
 
-    override fun getCurrentUser(): UserBean? = curUser
+    override fun currentUser(): UserBean? = curUser
 
     override fun getUserById(id: String?): UserBean? = userQueue.find { it.userId == id }
 

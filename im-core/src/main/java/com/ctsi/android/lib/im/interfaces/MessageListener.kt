@@ -9,6 +9,8 @@ import com.ctsi.android.lib.im.bean.MessageBean
  */
 interface MessageListener {
 
+    fun getChatId(): String?
+
     fun onDisconnect() {
 
     }

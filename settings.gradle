@@ -2,4 +2,4 @@ rootProject.name = "project-template"
 
 include ':app'
 include ':framework', ':widget'
-include ':im-core'
+include ':im-core', ':im-ui'

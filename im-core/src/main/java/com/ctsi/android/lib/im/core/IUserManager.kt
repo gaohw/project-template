@@ -11,7 +11,7 @@ interface IUserManager {
 
     fun setCurrentUser(id: String?)
 
-    fun getCurrentUser(): UserBean?
+    fun currentUser(): UserBean?
 
     fun getUserById(id: String?): UserBean?
 }

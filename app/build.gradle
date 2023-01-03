@@ -51,6 +51,10 @@ dependencies {
     implementation config.deps["material"]
     implementation config.deps["core-ktx"]
 
+    //im
+    implementation(project(':im-ui'))
+    implementation(project(':im-core'))
+
     implementation(project(':widget'))
     implementation(project(":framework"))
 //    implementation "com.github.gaohw.template:framework:1.0.1"

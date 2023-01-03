@@ -13,7 +13,7 @@ import com.ctsi.vip.lib.framework.utils.unpeeklivedata.domain.message.MutableRes
  */
 object NetworkStateHelper {
 
-    private val curNetworkState = com.ctsi.vip.lib.framework.utils.unpeeklivedata.domain.message.MutableResult<NetState>()
+    private val curNetworkState = MutableResult<NetState>()
 
     fun addObserver(owner: LifecycleOwner, block: (state: NetState) -> Unit) {
         curNetworkState.observe(owner) { block.invoke(it) }

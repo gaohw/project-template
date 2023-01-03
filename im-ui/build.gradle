@@ -1,0 +1,58 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+
+    id 'kotlin-kapt'
+    id 'com.github.dcendents.android-maven'
+}
+group = 'com.ctsi.vip'
+
+def config = rootProject.ext
+android {
+    compileSdkVersion config.android.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion config.android.minSdkVersion
+        targetSdkVersion config.android.targetSdkVersion
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions { jvmTarget = '1.8' }
+    viewBinding { enabled = true }
+
+    resourcePrefix "im_"
+}
+
+dependencies {
+    implementation config.deps["appcompat"]
+    implementation config.deps["material"]
+    implementation config.deps["core-ktx"]
+    implementation config.deps["recycler-view"]
+
+    implementation project(path: ":im-core")
+
+    implementation config.deps["utilcodex"]
+    implementation config.deps["glide"]
+    implementation config.deps["base-quick-adapter"]
+    implementation config.deps["smart-refresh"]
+    implementation config.deps["smart-refrash_header"]
+    implementation config.deps["smart-refrash_footer"]
+
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+}
+
+apply from: "../publish_maven.gradle"

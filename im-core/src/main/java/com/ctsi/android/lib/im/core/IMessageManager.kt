@@ -20,5 +20,9 @@ interface IMessageManager {
 
     fun getMessageChatList(): MutableList<ChatBean>?
 
-    fun getMessageList(id: String): MutableList<MessageBean>?
+    fun getMessageList(id: String, page: Int): MutableList<MessageBean>?
+
+    fun requestChatList(page: Int)
+
+    fun readMessageInChat(chatId: String)
 }

@@ -1,7 +1,6 @@
 package com.project.template.http.interceptors
 
 import com.blankj.utilcode.util.SPUtils
-import com.ctsi.vip.lib.framework.http.HttpConstants
 import okhttp3.Interceptor
 import okhttp3.Response
 

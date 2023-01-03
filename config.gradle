@@ -37,11 +37,12 @@ ext {
             "constraint-layout"       : 'com.android.support.constraint:constraint-layout:2.0.4',
 
             //third
+            "glide"                   : "com.github.bumptech.glide:glide:4.14.2",
             "utilcodex"               : 'com.blankj:utilcodex:1.31.0',
             "smart-refresh"           : 'io.github.scwang90:refresh-layout-kernel:2.0.5',
             "smart-refrash_header"    : 'io.github.scwang90:refresh-header-classics:2.0.5',
             "smart-refrash_footer"    : 'io.github.scwang90:refresh-footer-classics:2.0.5',
-            "base-quick-adapter"      : 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.7',
+            "base-quick-adapter"      : 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.10',
             "image-selector"          : "com.github.donkingliang:ImageSelector:2.2.1",
             "image-previewer"         : "com.github.SherlockGougou:BigImageViewPager:androidx-6.2.1",
 
