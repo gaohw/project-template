@@ -1,8 +1,10 @@
 package com.ctsi.android.lib.im.ui.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.blankj.utilcode.util.TimeUtils
 import com.bumptech.glide.Glide
 import com.ctsi.android.lib.im.CtsiIM
 import com.ctsi.android.lib.im.bean.MessageBean
@@ -10,6 +12,8 @@ import com.ctsi.android.lib.im.enums.Def
 import com.ctsi.android.lib.im.ui.R
 import com.ctsi.android.lib.im.ui.adapter.viewholder.MsgTextViewHolder
 import com.ctsi.android.lib.im.ui.adapter.viewholder.MsgViewHolder
+import com.ctsi.android.lib.im.utils.DateUtils
+import kotlin.math.abs
 
 /**
  * Class : MessageAdapter
@@ -37,6 +41,11 @@ class MessageAdapter : RecyclerView.Adapter<MsgViewHolder>() {
                 .into(holder.ivAvatar)
             holder.tvName.text = user?.userName
             holder.updateMessage(position, message)
+
+            val pre = getItemOrNull(position + 1)
+            val formatTime = formatMessageTime(message, pre)
+            holder.tvTime.text = formatTime
+            holder.tvTime.visibility = if (formatTime != null) View.VISIBLE else View.GONE
         } else {
             //do something
         }
@@ -74,6 +83,25 @@ class MessageAdapter : RecyclerView.Adapter<MsgViewHolder>() {
     }
 
     fun getItemOrNull(position: Int) = messageData.getOrNull(position)
+
+    private fun formatMessageTime(cur: MessageBean, pre: MessageBean?): String? {
+        try {
+            val date = TimeUtils.string2Date(cur.msgTime)
+            val need =
+                if (pre == null) true
+                else {
+                    val datePre = TimeUtils.string2Date(pre.msgTime)
+                    abs(date.time - datePre.time) > 300000
+                }
+            if (need) {
+                return DateUtils.formatDate(date)
+            }
+            return null
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return null
+    }
 
     override fun getItemCount(): Int = messageData.size
 

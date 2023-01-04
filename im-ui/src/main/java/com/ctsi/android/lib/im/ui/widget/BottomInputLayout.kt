@@ -22,8 +22,9 @@ import com.ctsi.android.lib.im.ui.R
  */
 class BottomInputLayout : FrameLayout {
 
-    var edtInput: EditText?
-    var btnSend: TextView?
+    private var edtInput: EditText? = null
+    private var btnSend: TextView? = null
+
     private var inputSendListener: OnInputSendListener? = null
     private val roundOutlineProvider by lazy {
         object : ViewOutlineProvider() {
@@ -81,8 +82,9 @@ class BottomInputLayout : FrameLayout {
         edtInput?.let { KeyboardUtils.hideSoftInput(it) }
     }
 
-    fun setInputSendListener(listener: OnInputSendListener?) {
+    fun setInputSendListener(listener: OnInputSendListener?): BottomInputLayout {
         this.inputSendListener = listener
+        return this
     }
 
     fun interface OnInputSendListener {

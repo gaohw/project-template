@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
 import com.blankj.utilcode.util.ToastUtils
+import com.ctsi.android.lib.im.CtsiIM
 import com.ctsi.android.lib.im.ui.fragment.ChatFragment
 import com.ctsi.vip.lib.framework.base.BaseActivity
 import com.project.template.R
@@ -46,6 +47,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
         //获取未读消息数
         mViewModel.getUnreadMessage()
+        CtsiIM.messageManager().sendTextMessage("admin", "测试文本消息")
     }
 
     override fun onBackPressed() {

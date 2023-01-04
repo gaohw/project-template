@@ -3,6 +3,7 @@ package com.ctsi.android.lib.im.bean
 import com.blankj.utilcode.util.TimeUtils
 import com.ctsi.android.lib.im.enums.Def.MessageType
 import com.ctsi.android.lib.im.manager.UserManager
+import com.ctsi.android.lib.im.utils.DateUtils
 import java.util.*
 
 /**
@@ -28,23 +29,13 @@ class MessageBean {
     var sendStatus: Int = 0      //发送状态 0发送中 1成功 2失败
 
     fun messageTime(): String? {
-        try {
+        return try {
             val date = TimeUtils.string2Date(msgTime, "yyyy-MM-dd HH:mm:ss")
-            return if (TimeUtils.isToday(date)) {
-                TimeUtils.date2String(date, "HH:mm")
-            } else {
-                val curYear = Calendar.getInstance().apply { time = Date() }.get(Calendar.YEAR)
-                val msgYear = Calendar.getInstance().apply { time = date }.get(Calendar.YEAR)
-                if (msgYear == curYear) {
-                    TimeUtils.date2String(date, "MM月dd日")
-                } else {
-                    TimeUtils.date2String(date, "yyyy年MM月dd日")
-                }
-            }
+            DateUtils.formatDate(date)
         } catch (e: Exception) {
             e.printStackTrace()
+            null
         }
-        return null
     }
 
     fun isSelf() = msgFrom == UserManager.currentUser()?.userId

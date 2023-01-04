@@ -4,53 +4,73 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:paddingStart="15dp"
-    android:paddingEnd="10dp"
-    android:paddingBottom="5dp"
-    tools:background="@color/color_0">
+    android:orientation="vertical"
+    android:paddingBottom="5dp">
+
+    <TextView
+        android:id="@+id/tv_message_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingTop="10dp"
+        android:paddingBottom="5dp"
+        android:textColor="@color/color_6"
+        android:textSize="14sp"
+        android:visibility="gone"
+        tools:text="时间"
+        tools:visibility="visible" />
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_weight="1"
-        android:gravity="end"
-        android:orientation="vertical">
+        android:orientation="horizontal"
+        android:paddingStart="55dp"
+        android:paddingEnd="10dp">
 
-        <TextView
-            android:id="@+id/tv_user_name"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:layout_toStartOf="@+id/iv_user_avatar"
-            android:textColor="@color/color_6"
-            android:textSize="14sp"
-            android:visibility="gone"
-            tools:text="用户名"
-            tools:visibility="visible" />
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_message_content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toStartOf="@+id/iv_user_avatar"
-            android:background="@drawable/im_ic_bubble_right"
-            android:gravity="center_vertical"
-            android:includeFontPadding="false"
-            android:paddingVertical="10dp"
-            android:paddingStart="15dp"
-            android:paddingEnd="20dp"
-            android:textColor="@color/color_3"
-            android:textSize="14sp"
-            tools:text="聊天内容" />
+            <TextView
+                android:id="@+id/tv_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_toStartOf="@+id/iv_user_avatar"
+                android:textColor="@color/color_6"
+                android:textSize="14sp"
+                android:visibility="gone"
+                tools:text="用户名"
+                tools:visibility="visible" />
+
+            <TextView
+                android:id="@+id/tv_message_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toStartOf="@+id/iv_user_avatar"
+                android:background="@drawable/im_ic_bubble_right"
+                android:gravity="center_vertical"
+                android:includeFontPadding="false"
+                android:paddingVertical="10dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="16dp"
+                android:textColor="@color/color_3"
+                android:textIsSelectable="true"
+                android:textSize="16sp"
+                tools:text="聊天内容" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_user_avatar"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/im_ic_avatar_default" />
 
     </LinearLayout>
-
-    <ImageView
-        android:id="@+id/iv_user_avatar"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:src="@drawable/im_ic_avatar_default" />
 
 </LinearLayout>

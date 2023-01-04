@@ -1,15 +1,21 @@
 package com.ctsi.android.lib.im.ui.activity
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import android.view.MotionEvent
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.BarUtils
+import com.blankj.utilcode.util.ColorUtils
 import com.ctsi.android.lib.im.CtsiIM
 import com.ctsi.android.lib.im.bean.MessageBean
 import com.ctsi.android.lib.im.bean.UserBean
 import com.ctsi.android.lib.im.interfaces.MessageListener
+import com.ctsi.android.lib.im.ui.R
 import com.ctsi.android.lib.im.ui.adapter.MessageAdapter
 import com.ctsi.android.lib.im.ui.databinding.ImActivityChatBinding
 
@@ -25,18 +31,16 @@ open class ChatRoomActivity : AppCompatActivity(), MessageListener {
 
     private val messageAdapter: MessageAdapter = MessageAdapter()
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        BarUtils.transparentStatusBar(this)
-        BarUtils.setStatusBarLightMode(this, false)
         userBean = CtsiIM.userManager().getUserById(intent?.getStringExtra("user_id")) ?: return
         mBinding = ImActivityChatBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
+        window.statusBarColor = ColorUtils.getColor(R.color.im_title)
 
-        mBinding.layoutTitle.setPadding(0, BarUtils.getStatusBarHeight(), 0, 0)
-        mBinding.btnBack.setOnClickListener { onBackPressed() }
         mBinding.tvChatUsername.text = userBean.userName
-
+        mBinding.btnBack.setOnClickListener { onBackPressed() }
         mBinding.layoutInput.setInputSendListener {
             CtsiIM.messageManager().sendTextMessage("${userBean.userId}", it)
         }

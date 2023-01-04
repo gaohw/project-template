@@ -15,6 +15,7 @@ import com.ctsi.android.lib.im.ui.R
 abstract class MsgViewHolder(val root: View) : RecyclerView.ViewHolder(root) {
     val ivAvatar: ImageView = root.findViewById(R.id.iv_user_avatar)
     val tvName: TextView = root.findViewById(R.id.tv_user_name)
+    val tvTime: TextView = root.findViewById(R.id.tv_message_time)
 
     abstract fun updateMessage(position: Int, message: MessageBean)
 }
