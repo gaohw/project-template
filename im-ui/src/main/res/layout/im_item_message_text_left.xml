@@ -55,6 +55,7 @@
                 android:id="@+id/tv_message_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:autoLink="web|phone|email"
                 android:background="@drawable/im_ic_bubble_left"
                 android:gravity="center_vertical"
                 android:includeFontPadding="false"
