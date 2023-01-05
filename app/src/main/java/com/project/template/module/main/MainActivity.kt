@@ -22,11 +22,9 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
     private var lastBackTime: Long = 0
 
-    private val titles = listOf("首页", "消息", "我的")
-    private val tabIcons = listOf(
-        R.drawable.selector_tab_home, R.drawable.selector_tab_message, R.drawable.selector_tab_mine
-    )
-    private val fragments = listOf(HomeFragment(), ChatFragment(), MineFragment())
+    private val titles = listOf("首页", "我的")
+    private val tabIcons = listOf(R.drawable.selector_tab_home, R.drawable.selector_tab_mine)
+    private val fragments = listOf(HomeFragment(), MineFragment())
 
     override fun onActivityCreate(savedInstanceState: Bundle?) {
         mBinding.vpMain.adapter = object : FragmentPagerAdapter(supportFragmentManager) {
@@ -47,7 +45,6 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
         //获取未读消息数
         mViewModel.getUnreadMessage()
-        CtsiIM.messageManager().sendTextMessage("admin", "测试文本消息")
     }
 
     override fun onBackPressed() {

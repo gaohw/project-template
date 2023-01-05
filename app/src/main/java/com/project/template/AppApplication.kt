@@ -12,8 +12,7 @@ class AppApplication : BaseApplication() {
 
     override fun onCreate() {
         super.onCreate()
-        CtsiIM.init(this)
-        CtsiIM.userManager().setCurrentUser("gao")
+        CtsiIM.enableDebug(isDebugMode()).init(this)
     }
 
     override fun isDebugMode(): Boolean = BuildConfig.DEBUG

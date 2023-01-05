@@ -18,11 +18,15 @@ interface IMessageManager {
 
     fun sendTextMessage(to: String, content: String)
 
+    fun sendImageMessage(to: String, path: String)
+
     fun getMessageChatList(): MutableList<ChatBean>?
 
     fun getMessageList(id: String, page: Int): MutableList<MessageBean>?
 
+    fun getUnreadCount(): Int
+
     fun requestChatList(page: Int)
 
-    fun readMessageInChat(chatId: String)
+    fun requestMessageInChat(chatId: String, page: Int)
 }

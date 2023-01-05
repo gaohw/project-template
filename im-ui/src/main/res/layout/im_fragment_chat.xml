@@ -28,19 +28,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingHorizontal="10dp"
-        android:paddingVertical="5dp">
+        android:paddingVertical="8dp">
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="38dp"
-            android:background="@drawable/im_shape_white_5dp"
-            android:drawableStart="@drawable/im_ic_search"
+            android:layout_height="34dp"
+            android:background="@drawable/im_shape_white_border_5dp"
             android:drawablePadding="5dp"
             android:gravity="center_vertical"
             android:paddingHorizontal="10dp"
             android:text="搜索"
-            android:textColor="@color/color_a"
-            android:textSize="14sp" />
+            android:textColor="@color/color_8"
+            android:textSize="14sp"
+            app:drawableStartCompat="@drawable/im_ic_search"
+            app:drawableTint="@color/color_8" />
 
     </FrameLayout>
 

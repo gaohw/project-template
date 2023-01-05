@@ -81,7 +81,6 @@ class BottomInputLayout : FrameLayout {
         inputView?.hideKeyboardAndInputView()
     }
 
-
     fun interface OnTextSendListener {
         fun onTextSend(text: String)
     }

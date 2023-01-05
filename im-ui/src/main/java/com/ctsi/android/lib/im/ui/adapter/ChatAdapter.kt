@@ -7,6 +7,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.ctsi.android.lib.im.CtsiIM
 import com.ctsi.android.lib.im.bean.ChatBean
+import com.ctsi.android.lib.im.enums.Def
 import com.ctsi.android.lib.im.ui.R
 import com.ctsi.android.lib.im.ui.activity.ChatRoomActivity
 
@@ -24,8 +25,8 @@ class ChatAdapter(data: MutableList<ChatBean>?) :
             val userId = chat?.user?.userId
             if (!userId.isNullOrEmpty()) {
                 ChatRoomActivity.chatPrivate(context, userId)
-                CtsiIM.messageManager().readMessageInChat("${chat.user?.userId}")
                 //更新未读数
+                chat.unreadCount = 0
                 notifyItemChanged(position, "unread")
             }
         }
@@ -37,9 +38,16 @@ class ChatAdapter(data: MutableList<ChatBean>?) :
             .into(holder.getView(R.id.iv_user_avatar))
         holder.setText(R.id.tv_user_name, item.user?.userName)
         holder.setText(R.id.tv_message_time, item.message?.messageTime())
-        holder.setText(R.id.tv_message_content, item.message?.msgContent)
-        holder.getView<TextView>(R.id.tv_message_unread).text = "${item.unreadCount}"
+        holder.setText(
+            R.id.tv_message_content, when (item.message?.msgType) {
+                Def.TYPE_TEXT -> item.message?.msgContent
+                Def.TYPE_IMAGE -> "[图片]"
+                else -> null
+            }
+        )
+        holder.setText(R.id.tv_message_unread, "${item.unreadCount}")
 
+        holder.setVisible(R.id.v_divider, holder.adapterPosition > 0)
         holder.setVisible(R.id.tv_message_unread, item.unreadCount > 0)
     }
 

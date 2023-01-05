@@ -11,7 +11,8 @@ import com.ctsi.android.lib.im.ui.R
  * Description:
  */
 class MsgTextViewHolder(view: View) : MsgViewHolder(view) {
-    val tvMsgContent: TextView = view.findViewById(R.id.tv_message_content)
+
+    private val tvMsgContent: TextView = view.findViewById(R.id.tv_message_content)
 
     override fun updateMessage(position: Int, message: MessageBean) {
         tvMsgContent.text = message.msgContent

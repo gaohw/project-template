@@ -10,6 +10,7 @@ import com.ctsi.android.lib.im.CtsiIM
 import com.ctsi.android.lib.im.bean.MessageBean
 import com.ctsi.android.lib.im.enums.Def
 import com.ctsi.android.lib.im.ui.R
+import com.ctsi.android.lib.im.ui.adapter.viewholder.MsgImageViewHolder
 import com.ctsi.android.lib.im.ui.adapter.viewholder.MsgTextViewHolder
 import com.ctsi.android.lib.im.ui.adapter.viewholder.MsgViewHolder
 import com.ctsi.android.lib.im.utils.DateUtils
@@ -29,6 +30,8 @@ class MessageAdapter : RecyclerView.Adapter<MsgViewHolder>() {
         return when (viewType) {
             1 -> MsgTextViewHolder(inflater.inflate(R.layout.im_item_message_text_right, parent, false))
             2 -> MsgTextViewHolder(inflater.inflate(R.layout.im_item_message_text_left, parent, false))
+            3 -> MsgImageViewHolder(inflater.inflate(R.layout.im_item_message_image_right, parent, false))
+            4 -> MsgImageViewHolder(inflater.inflate(R.layout.im_item_message_text_left, parent, false))
             else -> throw IllegalArgumentException("viewtype $viewType is unknown!!!")
         }
     }

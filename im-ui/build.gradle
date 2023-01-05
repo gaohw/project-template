@@ -49,7 +49,9 @@ dependencies {
     implementation config.deps["smart-refresh"]
     implementation config.deps["smart-refrash_header"]
     implementation config.deps["smart-refrash_footer"]
-    implementation config.deps["input-view"]
+
+    implementation 'com.github.mtjsoft:InputView:1.1.0'
+    implementation 'com.github.MZCretin:ExpandableTextView:v1.6.1-x'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

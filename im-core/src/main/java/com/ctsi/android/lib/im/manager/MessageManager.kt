@@ -22,6 +22,7 @@ internal object MessageManager : IMessageManager, IMWebSocketCallback {
 
     private const val WEB_SOCKET = "ws://27.128.172.122:8000/webSocket/"
     private const val WEB_SOCKET_SYSTEM = "ctsiapp"
+    private const val PAGE_SIZE = 20
 
     private val messageCache = mutableMapOf<String, MutableList<MessageBean>>()
     private val messageChatCache = mutableListOf<ChatBean>()
@@ -73,9 +74,30 @@ internal object MessageManager : IMessageManager, IMWebSocketCallback {
         }
     }
 
+    override fun sendImageMessage(to: String, path: String) {
+        val user = UserManager.currentUser()
+        if (user != null) {
+            val message = MessageBean(Def.TYPE_IMAGE).apply {
+                msgFrom = user.userId
+                msgTo = to
+                msgContent = path
+                msgTime = TimeUtils.millis2String(System.currentTimeMillis(), "yyyy-MM-dd HH:mm:ss")
+                readStatus = 1
+            }
+            addUser(to)
+            addMessage(to, message)
+            addMessageChat(to, message)
+//            if (user.userId != to) {
+//                IMConnectManager.sendMessage("$messageSocket", message.toSendMessage())
+//            }
+        }
+    }
+
     override fun getMessageChatList(): MutableList<ChatBean>? = messageChatCache
 
     override fun getMessageList(id: String, page: Int): MutableList<MessageBean>? = messageCache[id]
+
+    override fun getUnreadCount(): Int = messageChatCache.sumOf { it.unreadCount }
 
     override fun onReceiveMessage(msg: String) {
         try {
@@ -172,10 +194,15 @@ internal object MessageManager : IMessageManager, IMWebSocketCallback {
         runOnUiThread { messageChatListener?.onChatList(page, messageChatCache) }
     }
 
-    override fun readMessageInChat(chatId: String) {
-        val chat = messageChatCache.find { it.user?.userId == chatId }
-        if (chat != null) {
-            chat.unreadCount = 0
-        }
+    override fun requestMessageInChat(chatId: String, page: Int) {
+        messageChatCache.find { it.user?.userId == chatId }?.unreadCount = 0
+        val data = messageCache[chatId]
+        val result =
+            if (data != null) {
+                val start = PAGE_SIZE * page
+                val end = if (start + PAGE_SIZE > data.size) data.size else start + PAGE_SIZE
+                if (start < end) data.subList(start, end) else null
+            } else null
+        runOnUiThread { messageListener?.onMessageList(page, result) }
     }
 }

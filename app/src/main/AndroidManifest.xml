@@ -42,6 +42,10 @@
             android:name="com.project.template.module.test.TestActivity"
             android:exported="false"
             android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name="com.project.template.module.test.IMSampleActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.project.template.config.AppModuleConfig"
