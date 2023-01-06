@@ -18,7 +18,7 @@ class IMSampleActivity : BaseActivity<BaseViewModel, ActivityImSampleBinding>() 
 
     override fun onActivityCreate(savedInstanceState: Bundle?) {
         CtsiIM.userManager().setCurrentUser("gao")
-        CtsiIM.messageManager().sendTextMessage("xxyy", "测试文本消息")
+        CtsiIM.messageManager().sendTextMessage("gao", "测试文本消息")
         CtsiIM.messageManager().sendTextMessage("admin", "测试文本消息")
 
         supportFragmentManager.beginTransaction()

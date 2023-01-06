@@ -1,6 +1,5 @@
 package com.ctsi.android.lib.im.ui.adapter
 
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -10,9 +9,11 @@ import com.ctsi.android.lib.im.CtsiIM
 import com.ctsi.android.lib.im.bean.MessageBean
 import com.ctsi.android.lib.im.enums.Def
 import com.ctsi.android.lib.im.ui.R
+import com.ctsi.android.lib.im.ui.adapter.viewholder.MsgFileViewHolder
 import com.ctsi.android.lib.im.ui.adapter.viewholder.MsgImageViewHolder
 import com.ctsi.android.lib.im.ui.adapter.viewholder.MsgTextViewHolder
 import com.ctsi.android.lib.im.ui.adapter.viewholder.MsgViewHolder
+import com.ctsi.android.lib.im.ui.utils.inflate
 import com.ctsi.android.lib.im.utils.DateUtils
 import kotlin.math.abs
 
@@ -23,15 +24,23 @@ import kotlin.math.abs
  */
 class MessageAdapter : RecyclerView.Adapter<MsgViewHolder>() {
 
+    private val ITEM_TEXT_SEND = 1
+    private val ITEM_TEXT_RECEIVE = 2
+    private val ITEM_IMAGE_SEND = 3
+    private val ITEM_IMAGE_RECEIVE = 4
+    private val ITEM_FILE_SEND = 5
+    private val ITEM_FILE_RECEIVE = 6
+
     private val messageData: MutableList<MessageBean> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MsgViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
         return when (viewType) {
-            1 -> MsgTextViewHolder(inflater.inflate(R.layout.im_item_message_text_right, parent, false))
-            2 -> MsgTextViewHolder(inflater.inflate(R.layout.im_item_message_text_left, parent, false))
-            3 -> MsgImageViewHolder(inflater.inflate(R.layout.im_item_message_image_right, parent, false))
-            4 -> MsgImageViewHolder(inflater.inflate(R.layout.im_item_message_text_left, parent, false))
+            ITEM_TEXT_SEND -> MsgTextViewHolder(parent.inflate(R.layout.im_item_message_text_right))
+            ITEM_TEXT_RECEIVE -> MsgTextViewHolder(parent.inflate(R.layout.im_item_message_text_left))
+            ITEM_IMAGE_SEND -> MsgImageViewHolder(parent.inflate(R.layout.im_item_message_image_right))
+            ITEM_IMAGE_RECEIVE -> MsgImageViewHolder(parent.inflate(R.layout.im_item_message_image_left))
+            ITEM_FILE_SEND -> MsgFileViewHolder(parent.inflate(R.layout.im_item_message_file_right))
+            ITEM_FILE_RECEIVE -> MsgFileViewHolder(parent.inflate(R.layout.im_item_message_file_left))
             else -> throw IllegalArgumentException("viewtype $viewType is unknown!!!")
         }
     }
@@ -111,8 +120,9 @@ class MessageAdapter : RecyclerView.Adapter<MsgViewHolder>() {
     override fun getItemViewType(position: Int): Int {
         val message = messageData.getOrNull(position)
         return when (message?.msgType) {
-            Def.TYPE_IMAGE -> if (message.isSelf()) 3 else 4
-            Def.TYPE_TEXT -> if (message.isSelf()) 1 else 2
+            Def.TYPE_TEXT -> if (message.isSelf()) ITEM_TEXT_SEND else ITEM_TEXT_RECEIVE
+            Def.TYPE_IMAGE -> if (message.isSelf()) ITEM_IMAGE_SEND else ITEM_IMAGE_RECEIVE
+            Def.TYPE_FILE -> if (message.isSelf()) ITEM_FILE_SEND else ITEM_FILE_RECEIVE
             else -> 0
         }
     }

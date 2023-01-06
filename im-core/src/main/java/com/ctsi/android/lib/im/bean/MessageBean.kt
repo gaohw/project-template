@@ -24,6 +24,7 @@ class MessageBean {
     var msgTo: String? = null
     var msgTime: String? = null
     var msgContent: String? = null
+    val fileSize: String? = null
 
     var readStatus: Int = 0      //已读状态 0未读 1已读
     var sendStatus: Int = 0      //发送状态 0发送中 1成功 2失败

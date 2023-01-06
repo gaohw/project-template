@@ -20,6 +20,8 @@ interface IMessageManager {
 
     fun sendImageMessage(to: String, path: String)
 
+    fun sendFileMessage(to: String, path: String)
+
     fun getMessageChatList(): MutableList<ChatBean>?
 
     fun getMessageList(id: String, page: Int): MutableList<MessageBean>?

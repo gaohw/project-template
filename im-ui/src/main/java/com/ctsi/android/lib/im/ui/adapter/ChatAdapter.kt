@@ -42,6 +42,7 @@ class ChatAdapter(data: MutableList<ChatBean>?) :
             R.id.tv_message_content, when (item.message?.msgType) {
                 Def.TYPE_TEXT -> item.message?.msgContent
                 Def.TYPE_IMAGE -> "[图片]"
+                Def.TYPE_FILE -> "[文件]"
                 else -> null
             }
         )

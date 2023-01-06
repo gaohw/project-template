@@ -55,10 +55,20 @@ internal object MessageManager : IMessageManager, IMWebSocketCallback {
         messageChatListener = null
     }
 
-    override fun sendTextMessage(to: String, content: String) {
+    override fun sendTextMessage(to: String, content: String) = doUploadFileAndSendMessage(Def.TYPE_TEXT, to, content)
+
+    override fun sendImageMessage(to: String, path: String) = doUploadFileAndSendMessage(Def.TYPE_IMAGE, to, path)
+
+    override fun sendFileMessage(to: String, path: String) = doUploadFileAndSendMessage(Def.TYPE_FILE, to, path)
+
+    //发送信息
+    private fun doUploadFileAndSendMessage(@Def.MessageType type: String, to: String, content: String) {
+        if (type == Def.TYPE_IMAGE || type == Def.TYPE_FILE) {
+            //上传文件
+        }
         val user = UserManager.currentUser()
         if (user != null) {
-            val message = MessageBean(Def.TYPE_TEXT).apply {
+            val message = MessageBean(type).apply {
                 msgFrom = user.userId
                 msgTo = to
                 msgContent = content
@@ -71,25 +81,6 @@ internal object MessageManager : IMessageManager, IMWebSocketCallback {
             if (user.userId != to) {
                 IMConnectManager.sendMessage("$messageSocket", message.toSendMessage())
             }
-        }
-    }
-
-    override fun sendImageMessage(to: String, path: String) {
-        val user = UserManager.currentUser()
-        if (user != null) {
-            val message = MessageBean(Def.TYPE_IMAGE).apply {
-                msgFrom = user.userId
-                msgTo = to
-                msgContent = path
-                msgTime = TimeUtils.millis2String(System.currentTimeMillis(), "yyyy-MM-dd HH:mm:ss")
-                readStatus = 1
-            }
-            addUser(to)
-            addMessage(to, message)
-            addMessageChat(to, message)
-//            if (user.userId != to) {
-//                IMConnectManager.sendMessage("$messageSocket", message.toSendMessage())
-//            }
         }
     }
 

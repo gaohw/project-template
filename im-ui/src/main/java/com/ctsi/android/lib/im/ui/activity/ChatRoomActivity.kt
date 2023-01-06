@@ -1,24 +1,22 @@
 package com.ctsi.android.lib.im.ui.activity
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.net.toFile
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.*
 import com.ctsi.android.lib.im.CtsiIM
 import com.ctsi.android.lib.im.bean.MessageBean
 import com.ctsi.android.lib.im.bean.UserBean
-import com.ctsi.android.lib.im.enums.Def.TYPE_TEXT
 import com.ctsi.android.lib.im.interfaces.MessageListener
 import com.ctsi.android.lib.im.ui.R
 import com.ctsi.android.lib.im.ui.adapter.MessageAdapter
 import com.ctsi.android.lib.im.ui.databinding.ImActivityChatBinding
+import kotlin.reflect.KFunction0
 
 /**
  * Class : ChatRoomActivity
@@ -27,7 +25,8 @@ import com.ctsi.android.lib.im.ui.databinding.ImActivityChatBinding
  */
 open class ChatRoomActivity : AppCompatActivity(), MessageListener {
 
-    private val REQUEST_IMAGE = 0X01
+    private val REQUEST_IMAGE = 0x01
+    private val REQUESR_FILE = 0x03
 
     private lateinit var mBinding: ImActivityChatBinding
     private lateinit var userBean: UserBean
@@ -59,7 +58,30 @@ open class ChatRoomActivity : AppCompatActivity(), MessageListener {
             }
             .setFunctionClickListener { position, name ->
                 when (position) {
-                    0 -> openImageSelect()
+                    0 -> requestPermission(Manifest.permission.READ_EXTERNAL_STORAGE) {
+                        try {
+                            val intent =
+                                Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                            intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*")
+                            startActivityForResult(intent, REQUEST_IMAGE)
+                        } catch (e: Exception) {
+                            ToastUtils.showShort("图片选择器打开失败，请重试")
+                            e.printStackTrace()
+                        }
+                    }
+                    1 -> requestPermission(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA) {
+                        ToastUtils.showShort("拍摄")
+                    }
+                    2 -> requestPermission(Manifest.permission.READ_EXTERNAL_STORAGE) {
+                        try {
+                            val intent = Intent(Intent.ACTION_GET_CONTENT).setType("*/*")
+                                .addCategory(Intent.CATEGORY_OPENABLE)
+                            startActivityForResult(intent, REQUESR_FILE)
+                        } catch (e: Exception) {
+                            ToastUtils.showShort("文件选择器打开失败，请重试")
+                            e.printStackTrace()
+                        }
+                    }
                     else -> ToastUtils.showShort("功能点击：$position $name")
                 }
             }
@@ -103,16 +125,16 @@ open class ChatRoomActivity : AppCompatActivity(), MessageListener {
         }
     }
 
-    private fun openImageSelect() {
-        try {
-            val intent =
-                Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-            intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*")
-            startActivityForResult(intent, REQUEST_IMAGE)
-        } catch (e: Exception) {
-            ToastUtils.showShort("图片选择器打开失败，请重试")
-            e.printStackTrace()
-        }
+    private fun requestPermission(vararg permissions: String?, function: () -> Unit) {
+        PermissionUtils.permission(*permissions).callback(object : PermissionUtils.SimpleCallback {
+            override fun onGranted() {
+                function.invoke()
+            }
+
+            override fun onDenied() {
+                ToastUtils.showShort("权限获取失败，请重试")
+            }
+        }).request()
     }
 
     override fun onReceiveMessage(message: MessageBean) {
@@ -121,9 +143,15 @@ open class ChatRoomActivity : AppCompatActivity(), MessageListener {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_IMAGE && resultCode == RESULT_OK) {
+        if ((requestCode == REQUEST_IMAGE || requestCode == REQUESR_FILE)
+            && resultCode == RESULT_OK
+        ) {
             val path = UriUtils.uri2File(data?.data)?.absolutePath
-            CtsiIM.messageManager().sendImageMessage("${userBean.userId}", "$path")
+            if (ImageUtils.isImage(path)) {
+                CtsiIM.messageManager().sendImageMessage("${userBean.userId}", "$path")
+            } else {
+                CtsiIM.messageManager().sendFileMessage("${userBean.userId}", "$path")
+            }
         } else super.onActivityResult(requestCode, resultCode, data)
     }
 
