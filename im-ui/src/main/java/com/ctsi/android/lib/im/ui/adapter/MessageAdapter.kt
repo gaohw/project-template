@@ -94,6 +94,13 @@ class MessageAdapter : RecyclerView.Adapter<MsgViewHolder>() {
         }
     }
 
+    fun addAllData(position: Int, data: List<MessageBean>?) {
+        if (!data.isNullOrEmpty()) {
+            messageData.addAll(position, data)
+            notifyItemRangeChanged(position, data.size)
+        }
+    }
+
     fun getItemOrNull(position: Int) = messageData.getOrNull(position)
 
     private fun formatMessageTime(cur: MessageBean, pre: MessageBean?): String? {

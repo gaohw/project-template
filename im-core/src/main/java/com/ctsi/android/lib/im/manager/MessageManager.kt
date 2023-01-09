@@ -12,6 +12,7 @@ import com.ctsi.android.lib.im.enums.Def
 import com.ctsi.android.lib.im.interfaces.MessageListener
 import com.ctsi.android.lib.im.interfaces.MessageChatListener
 import org.json.JSONObject
+import java.util.*
 
 /**
  * Class : MessageManager
@@ -24,8 +25,8 @@ internal object MessageManager : IMessageManager, IMWebSocketCallback {
     private const val WEB_SOCKET_SYSTEM = "ctsiapp"
     private const val PAGE_SIZE = 20
 
-    private val messageCache = mutableMapOf<String, MutableList<MessageBean>>()
-    private val messageChatCache = mutableListOf<ChatBean>()
+    private val messageCache = mutableMapOf<String, LinkedList<MessageBean>>()
+    private val messageChatCache = LinkedList<ChatBean>()
 
     private var messageSocket: String? = null
     private var messageListener: MessageListener? = null
@@ -134,7 +135,8 @@ internal object MessageManager : IMessageManager, IMWebSocketCallback {
     private fun addMessage(id: String, message: MessageBean) {
         var messageList = messageCache[id]
         if (messageList == null) {
-            messageList = mutableListOf(message)
+            messageList = LinkedList<MessageBean>()
+                .apply { add(message) }
             messageCache[id] = messageList
         } else {
             messageList.add(0, message)

@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.*
 import com.ctsi.android.lib.im.CtsiIM
 import com.ctsi.android.lib.im.bean.MessageBean
@@ -16,7 +17,6 @@ import com.ctsi.android.lib.im.interfaces.MessageListener
 import com.ctsi.android.lib.im.ui.R
 import com.ctsi.android.lib.im.ui.adapter.MessageAdapter
 import com.ctsi.android.lib.im.ui.databinding.ImActivityChatBinding
-import kotlin.reflect.KFunction0
 
 /**
  * Class : ChatRoomActivity
@@ -31,6 +31,9 @@ open class ChatRoomActivity : AppCompatActivity(), MessageListener {
     private lateinit var mBinding: ImActivityChatBinding
     private lateinit var userBean: UserBean
     private var mPageNo: Int = 0
+
+    private var mAfterPause: Boolean = false
+    private var mScrollDistance: Int = 0
 
     private val messageAdapter: MessageAdapter = MessageAdapter()
 
@@ -92,9 +95,23 @@ open class ChatRoomActivity : AppCompatActivity(), MessageListener {
             mBinding.layoutInput.hide()
             false
         }
-//        mBinding.layoutRefresh.setOnRefreshListener {
-//            CtsiIM.messageManager().requestMessageInChat("${userBean.userId}", mPageNo + 1)
-//        }
+        mBinding.rvMessage.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                //解决页面切换后RecyclerView自动滑动的问题
+                //设置为stackFromEnd获知reverseLayout导致，为找到原因
+                if (mAfterPause) {
+                    mAfterPause = false
+                    val distance = computeScrollDistance()
+                    if (distance != mScrollDistance) {
+                        recyclerView.scrollBy(0, distance - mScrollDistance)
+                    }
+                }
+            }
+        })
+        mBinding.layoutRefresh.setOnRefreshListener {
+            CtsiIM.messageManager().requestMessageInChat("${userBean.userId}", mPageNo + 1)
+        }
         KeyboardUtils.registerSoftInputChangedListener(this) { height ->
             if (height > 0) {
                 mBinding.rvMessage.scrollToPosition(0)
@@ -108,9 +125,9 @@ open class ChatRoomActivity : AppCompatActivity(), MessageListener {
     override fun getChatId(): String? = userBean.userId
 
     override fun onMessageList(page: Int, data: MutableList<MessageBean>?) {
-//        if (mBinding.layoutRefresh.isRefreshing) {
-//            mBinding.layoutRefresh.finishRefresh()
-//        }
+        if (mBinding.layoutRefresh.isRefreshing) {
+            mBinding.layoutRefresh.finishRefresh()
+        }
         if (data.isNullOrEmpty()) {
             return
         }
@@ -118,7 +135,7 @@ open class ChatRoomActivity : AppCompatActivity(), MessageListener {
         if (page == 0) {
             messageAdapter.setNewData(data)
             mBinding.rvMessage.run {
-                postDelayed({ scrollToPosition(0) }, 200)
+                postDelayed({ scrollToPosition(0) }, 100)
             }
         } else {
             messageAdapter.addAllData(data)
@@ -153,6 +170,19 @@ open class ChatRoomActivity : AppCompatActivity(), MessageListener {
                 CtsiIM.messageManager().sendFileMessage("${userBean.userId}", "$path")
             }
         } else super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mAfterPause = true
+        mScrollDistance = computeScrollDistance()
+    }
+
+    private fun computeScrollDistance(): Int {
+        val range = mBinding.rvMessage.computeVerticalScrollRange()
+        val extent = mBinding.rvMessage.computeVerticalScrollExtent()
+        val offset = mBinding.rvMessage.computeVerticalScrollOffset()
+        return range - extent - offset
     }
 
     override fun onDestroy() {
