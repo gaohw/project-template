@@ -227,7 +227,7 @@ internal object MessageManager : IMessageManager, IMWebSocketCallback {
         DatabaseManager.enqueue {
             it.messageDao()?.updateReadStatusInChat(chatId, 1)
         }
-        if (offset == 0 && !messageCache[chatId].isNullOrEmpty()) {
+        if (offset == 0 && (messageCache[chatId]?.size ?: 0) >= PAGE_SIZE) {
             runOnUiThread { messageListener?.onMessageList(0, messageCache[chatId]) }
         } else {
             DatabaseManager.enqueue { manager ->
