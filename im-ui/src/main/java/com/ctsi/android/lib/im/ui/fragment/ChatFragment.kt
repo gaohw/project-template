@@ -60,13 +60,6 @@ class ChatFragment : Fragment(), MessageChatListener {
         if (mBinding.layoutRefresh.isLoading) {
             mBinding.layoutRefresh.finishLoadMore()
         }
-
-        //模拟消息发送
-        if (data.isNullOrEmpty()) {
-            CtsiIM.messageManager().sendTextMessage("gao", "测试文本消息")
-            CtsiIM.messageManager().sendTextMessage("admin", "测试文本消息")
-            CtsiIM.messageManager().sendTextMessage("user1", "测试文本消息")
-        }
     }
 
     override fun onReceiveMessage(chat: ChatBean, oldPosition: Int) {
