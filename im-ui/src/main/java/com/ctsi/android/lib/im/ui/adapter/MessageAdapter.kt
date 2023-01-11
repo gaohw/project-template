@@ -105,11 +105,11 @@ class MessageAdapter : RecyclerView.Adapter<MsgViewHolder>() {
 
     private fun formatMessageTime(cur: MessageBean, pre: MessageBean?): String? {
         try {
-            val date = TimeUtils.string2Date(cur.msgTime)
+            val date = TimeUtils.millis2Date(cur.msgTime!!.toLong())
             val need =
                 if (pre == null) true
                 else {
-                    val datePre = TimeUtils.string2Date(pre.msgTime)
+                    val datePre = TimeUtils.millis2Date(pre.msgTime!!.toLong())
                     abs(date.time - datePre.time) > 300000
                 }
             if (need) {

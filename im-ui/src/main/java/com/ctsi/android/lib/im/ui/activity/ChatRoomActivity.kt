@@ -30,7 +30,6 @@ open class ChatRoomActivity : AppCompatActivity(), MessageListener {
 
     private lateinit var mBinding: ImActivityChatBinding
     private lateinit var userBean: UserBean
-    private var mPageNo: Int = 0
 
     private var mAfterPause: Boolean = false
     private var mScrollDistance: Int = 0
@@ -110,7 +109,7 @@ open class ChatRoomActivity : AppCompatActivity(), MessageListener {
             }
         })
         mBinding.layoutRefresh.setOnRefreshListener {
-            CtsiIM.messageManager().requestMessageInChat("${userBean.userId}", mPageNo + 1)
+            CtsiIM.messageManager().requestMessageInChat("${userBean.userId}")
         }
         KeyboardUtils.registerSoftInputChangedListener(this) { height ->
             if (height > 0) {
@@ -124,15 +123,14 @@ open class ChatRoomActivity : AppCompatActivity(), MessageListener {
 
     override fun getChatId(): String? = userBean.userId
 
-    override fun onMessageList(page: Int, data: MutableList<MessageBean>?) {
+    override fun onMessageList(start: Int, data: MutableList<MessageBean>?) {
         if (mBinding.layoutRefresh.isRefreshing) {
             mBinding.layoutRefresh.finishRefresh()
         }
         if (data.isNullOrEmpty()) {
             return
         }
-        mPageNo = page
-        if (page == 0) {
+        if (start == 0) {
             messageAdapter.setNewData(data)
             mBinding.rvMessage.run {
                 postDelayed({ scrollToPosition(0) }, 100)

@@ -1,7 +1,11 @@
 package com.ctsi.android.lib.im.manager
 
+import com.blankj.utilcode.util.Utils
 import com.ctsi.android.lib.im.bean.UserBean
 import com.ctsi.android.lib.im.core.IUserManager
+import com.ctsi.android.lib.im.db.DatabaseManager
+import com.ctsi.android.lib.im.utils.toBean
+import com.ctsi.android.lib.im.utils.toEntity
 
 /**
  * Class : IMUserManager
@@ -16,19 +20,22 @@ internal object UserManager : IUserManager {
     override fun setCurrentUser(id: String?) {
         if (id.isNullOrEmpty()) {
             MessageManager.close(curUser?.userId)
+            DatabaseManager.close()
             curUser = null
             return
         }
         if (curUser?.userId == id) {
             return
         }
-        //todo 获取用户信息
-        curUser = UserBean().apply {
-            userId = id
-            userName = id
+        curUser = UserBean().apply { userId = id; userName = id }
+        //连接服务期&数据库
+        MessageManager.connect()
+        DatabaseManager.connect(Utils.getApp(), id)
+        DatabaseManager.enqueue { manager ->
+            manager.userDao()?.queryAllUser()?.forEach { userQueue.add(it.toBean()) }
         }
-        MessageManager.connect()        //连接服务期
     }
+
 
     override fun currentUser(): UserBean? = curUser
 
@@ -36,5 +43,6 @@ internal object UserManager : IUserManager {
 
     fun addUser(userBean: UserBean) {
         userQueue.add(userBean)
+        DatabaseManager.enqueue { it.userDao()?.insertUser(userBean.toEntity()) }
     }
 }

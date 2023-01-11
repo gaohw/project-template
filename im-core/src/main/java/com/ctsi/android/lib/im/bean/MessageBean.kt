@@ -19,6 +19,19 @@ class MessageBean {
         msgType = type
     }
 
+    var msgId: String? = null
+        get() {
+            if (field == null)
+                field = UUID.randomUUID().toString()
+            return field
+        }
+    var msgChatId: String? = null
+        get() {
+            if (field == null) {
+                field = if (isSelf()) msgTo else msgFrom
+            }
+            return field
+        }
     var msgType: String? = null
     var msgFrom: String? = null
     var msgTo: String? = null
@@ -31,8 +44,7 @@ class MessageBean {
 
     fun messageTime(): String? {
         return try {
-            val date = TimeUtils.string2Date(msgTime, "yyyy-MM-dd HH:mm:ss")
-            DateUtils.formatDate(date)
+            DateUtils.formatDate(TimeUtils.millis2Date(msgTime!!.toLong()))
         } catch (e: Exception) {
             e.printStackTrace()
             null

@@ -22,13 +22,15 @@ interface IMessageManager {
 
     fun sendFileMessage(to: String, path: String)
 
+    fun getMessage(id: String): MessageBean?
+
     fun getMessageChatList(): MutableList<ChatBean>?
 
-    fun getMessageList(id: String, page: Int): MutableList<MessageBean>?
+    fun getMessageList(id: String, start: Int): MutableList<MessageBean>?
 
     fun getUnreadCount(): Int
 
-    fun requestChatList(page: Int)
+    fun requestChatList()
 
-    fun requestMessageInChat(chatId: String, page: Int)
+    fun requestMessageInChat(chatId: String, offset: Int = -1)
 }

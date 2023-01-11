@@ -1,7 +1,7 @@
 package com.ctsi.android.lib.im
 
 import android.content.Context
-import com.ctsi.android.lib.im.core.IMConnectManager
+import com.blankj.utilcode.util.PathUtils
 import com.ctsi.android.lib.im.core.IMessageManager
 import com.ctsi.android.lib.im.core.IUserManager
 import com.ctsi.android.lib.im.manager.MessageManager
@@ -15,6 +15,7 @@ import com.ctsi.android.lib.im.manager.UserManager
 object CtsiIM {
 
     var isDebug: Boolean = false
+    val DEFAULT_PATH = PathUtils.getInternalAppFilesPath() + "/im"
 
     fun enableDebug(debug: Boolean): CtsiIM {
         isDebug = debug

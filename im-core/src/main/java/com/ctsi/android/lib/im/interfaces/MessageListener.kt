@@ -15,7 +15,7 @@ interface MessageListener {
 
     }
 
-    fun onMessageList(page: Int, data: MutableList<MessageBean>?) {
+    fun onMessageList(start: Int, data: MutableList<MessageBean>?) {
 
     }
 

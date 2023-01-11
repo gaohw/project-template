@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.BarUtils
+import com.blankj.utilcode.util.ThreadUtils
 import com.ctsi.android.lib.im.CtsiIM
 import com.ctsi.android.lib.im.bean.ChatBean
 import com.ctsi.android.lib.im.interfaces.MessageChatListener
@@ -42,28 +43,29 @@ class ChatFragment : Fragment(), MessageChatListener {
                 findViewById<ImageView>(R.id.iv_empty_icon).setImageResource(R.drawable.im_ic_chat_empty)
                 findViewById<TextView>(R.id.tv_empty_text).text = "暂无聊天记录~"
             })
-        mBinding.rvChatHistory.layoutManager = LinearLayoutManager(requireContext());
+        mBinding.rvChatHistory.layoutManager = LinearLayoutManager(requireContext())
         mBinding.rvChatHistory.adapter = chatAdapter
-        mBinding.layoutRefresh.setOnRefreshListener {
-            CtsiIM.messageManager().requestChatList(0)
-        }
+        mBinding.layoutRefresh.setOnRefreshListener { CtsiIM.messageManager().requestChatList() }
         CtsiIM.messageManager().setMessageChatListener(this)
+        CtsiIM.messageManager().requestChatList()
     }
 
-    override fun onChatList(page: Int, data: List<ChatBean>?) {
-        super.onChatList(page, data)
+    override fun onChatList(data: List<ChatBean>?) {
         if (!data.isNullOrEmpty()) {
-            if (page == 0) {
-                chatAdapter?.setNewInstance(data as MutableList<ChatBean>?)
-            } else {
-                chatAdapter?.addData(data)
-            }
+            chatAdapter?.setNewInstance(data as MutableList<ChatBean>?)
         }
         if (mBinding.layoutRefresh.isRefreshing) {
             mBinding.layoutRefresh.finishRefresh()
         }
         if (mBinding.layoutRefresh.isLoading) {
             mBinding.layoutRefresh.finishLoadMore()
+        }
+
+        //模拟消息发送
+        if (data.isNullOrEmpty()) {
+            CtsiIM.messageManager().sendTextMessage("gao", "测试文本消息")
+            CtsiIM.messageManager().sendTextMessage("admin", "测试文本消息")
+            CtsiIM.messageManager().sendTextMessage("user1", "测试文本消息")
         }
     }
 

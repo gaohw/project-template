@@ -41,8 +41,12 @@ dependencies {
     implementation config.deps["material"]
     implementation config.deps["core-ktx"]
 
+    implementation config.deps["room"]
     implementation config.deps["okhttp"]
     implementation config.deps["utilcodex"]
+    implementation config.deps["kotlin-coroutines"]
+
+    kapt config.deps["room-compiler"]
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

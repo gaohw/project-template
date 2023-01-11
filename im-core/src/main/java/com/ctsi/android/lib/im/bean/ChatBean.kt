@@ -6,7 +6,8 @@ package com.ctsi.android.lib.im.bean
  * Description:
  */
 class ChatBean {
+    var id: String? = null
     var user: UserBean? = null
     var message: MessageBean? = null
-    var unreadCount: Int = 0     //未读消息数
+    var unreadCount: Int = 0            //未读消息数
 }

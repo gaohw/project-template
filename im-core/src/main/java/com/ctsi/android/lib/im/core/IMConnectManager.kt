@@ -130,9 +130,9 @@ internal object IMConnectManager : WebSocketListener() {
         fun sendMessage(message: String): Boolean {
             val send = mWebSocket?.send(message)
             if (send == true) {
-                log("$url sendMessage ====> 发送成功")
+                log("$url sendMessage ====> 发送成功 $message")
             } else {
-                log("$url sendMessage ====> 发送失败")
+                log("$url sendMessage ====> 发送失败 $message")
             }
             return send ?: false
         }

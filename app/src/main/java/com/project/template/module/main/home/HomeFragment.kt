@@ -3,14 +3,12 @@ package com.project.template.module.main.home
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import cc.shinichi.library.ImagePreview
-import com.blankj.utilcode.util.LogUtils
 import com.ctsi.vip.lib.framework.base.BaseFragment
 import com.donkingliang.imageselector.utils.ImageSelector
 import com.project.template.R
 import com.project.template.databinding.FragmentHomeBinding
 import com.project.template.module.main.MainViewModel
 import com.project.template.module.test.IMSampleActivity
-
 
 /**
  * Created by GaoHW at 2022-7-5.

@@ -2,6 +2,7 @@ package com.project.template.module.test
 
 import android.os.Bundle
 import android.view.View
+import com.blankj.utilcode.util.ThreadUtils
 import com.ctsi.android.lib.im.CtsiIM
 import com.ctsi.android.lib.im.ui.fragment.ChatFragment
 import com.ctsi.vip.lib.framework.base.BaseActivity
@@ -18,9 +19,6 @@ class IMSampleActivity : BaseActivity<BaseViewModel, ActivityImSampleBinding>() 
 
     override fun onActivityCreate(savedInstanceState: Bundle?) {
         CtsiIM.userManager().setCurrentUser("gao")
-        CtsiIM.messageManager().sendTextMessage("gao", "测试文本消息")
-        CtsiIM.messageManager().sendTextMessage("admin", "测试文本消息")
-
         supportFragmentManager.beginTransaction()
             .add(R.id.layout_container, ChatFragment())
             .commitAllowingStateLoss()
